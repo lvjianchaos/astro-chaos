@@ -223,6 +223,20 @@ telegram、whatsapp、x。
 
 若要换到别的平台，改构建命令与输出目录即可，站点本身不依赖任何特定平台。
 
+> **关于 Mermaid / Excalidraw**：图表在构建期用无头浏览器渲染成 SVG，结果缓存在
+> `apps/site/.sage-cache/diagrams/` 并已提交。Vercel 的构建环境没有浏览器，所以
+> **新增图表后先在本地跑一次 `pnpm build` 再提交**，缓存里就带上了新图。
+> 如果想让 Vercel 每次都自己渲染，把构建命令改成：
+>
+> ```bash
+> pnpm --filter @io/site exec playwright install --with-deps chromium && pnpm --filter @io/site build
+> ```
+>
+> 代价是每次构建多花 1–2 分钟下载浏览器。
+
+> **绑定域名后**：把 `apps/site/sage.config.ts` 里的 `site.url` 改成正式地址
+> （它会写进 canonical 链接、RSS 与 sitemap），再构建一次并重新部署。
+
 ## 出处与致谢
 
 主题代码源自以下两个 MIT 许可的项目，版权声明保留在 [LICENSE](LICENSE)：
