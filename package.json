@@ -1,5 +1,5 @@
 {
-  "name": "io-chaos",
+  "name": "astro-chaos",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.34.7",

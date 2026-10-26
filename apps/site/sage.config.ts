@@ -24,7 +24,7 @@ export default defineSageConfig({
     showBackButton: true,
     editPost: {
       enabled: true,
-      url: "https://github.com/lvjianchaos/io-chaos/edit/main/apps/site/",
+      url: "https://github.com/lvjianchaos/astro-chaos/edit/main/apps/site/",
     },
     search: "pagefind",
   },
