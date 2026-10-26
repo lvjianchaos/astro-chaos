@@ -32,6 +32,11 @@ public/pagefind
 # 项目记忆（本地笔记，不上传）
 .memory/
 
+# AI 协作指令与内部设计记录（本地保留，不公开）
+AGENTS.md
+CLAUDE.md
+docs/decisions/
+
 # 本地截图（apps/site/scripts/screenshot.mjs 生成）
 apps/*/.screenshots/
 

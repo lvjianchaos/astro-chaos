@@ -3,10 +3,8 @@
 > **This is the `io-chaos` fork.** It adds a Chinese-first typography layer, a
 > `category` field (article type) on top of `tags`/`series`, and a `zh-CN`
 > UI bundle.
-> See [`docs/decisions/006-chinese-typography.md`](docs/decisions/006-chinese-typography.md)
-> for the typography rationale.
 
-A reference for agents and contributors: what the theme supports, how to switch each feature on, and where to find a working example. Keep it accurate. When a feature is added, changed or removed, update this file in the same PR (see [AGENTS.md](AGENTS.md)).
+A reference for agents and contributors: what the theme supports, how to switch each feature on, and where to find a working example. Keep it accurate: when a feature is added, changed or removed, update this file in the same commit.
 
 Working examples live in the site:
 
@@ -158,4 +156,3 @@ Diagrams need Chromium at build time (`pnpm add -D playwright && npx playwright 
 - Colours, fonts and measure are CSS custom properties in [`src/styles/theme.css`](packages/astro-sage/src/styles/theme.css). Override them in your own CSS.
 - Components can be imported from `astro-sage/components/*` (e.g. `Figure.astro` in MDX).
 - Code themes live in [`src/markdown/code-themes.ts`](packages/astro-sage/src/markdown/code-themes.ts).
-- Design rationale: [`docs/decisions/`](docs/decisions/).

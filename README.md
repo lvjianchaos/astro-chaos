@@ -102,7 +102,6 @@ flowchart LR
 
 ## 中文排版的几个关键决定
 
-见 [`docs/decisions/006-chinese-typography.md`](docs/decisions/006-chinese-typography.md)。
 要点：
 
 - 栏宽按**全角字**计算（36–40 字/行），而不是西文的 66–71 字符；
@@ -136,8 +135,6 @@ flowchart LR
   AstroSage 本身由它重构而来。
 
 本仓库是中文本地化 + 算法特化的改造版本，**不是**上述项目的官方分支，也不回传上游。
-本站自己的设计决策记录在 [`docs/decisions/`](docs/decisions/)；上游的决策记录（含我们改造
-前的西文排版基线）留在上游仓库，需要时去查。
 
 ## 许可
 
