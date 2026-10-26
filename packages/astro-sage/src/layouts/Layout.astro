@@ -33,6 +33,11 @@ const {
 
 // Crawlers check the declared type against the file.
 const rssHref = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`;
+
+// Site-level typography switches (see sage.config.ts).
+const typographyVars = [
+  config.typography.paragraphIndent ? "--paragraph-indent: 2em;" : "",
+].join("");
 ---
 
 <!doctype html>
@@ -103,6 +108,12 @@ const rssHref = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`;
 
     <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
+
+    {/*
+      Site-level typography switches. Kept as an inline style so a site can
+      flip them from sage.config.ts without shipping a CSS file.
+    */}
+    <style is:inline set:html={typographyVars} />
 
     <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
     <slot name="head" />

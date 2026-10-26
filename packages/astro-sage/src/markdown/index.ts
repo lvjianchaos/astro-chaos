@@ -1,7 +1,6 @@
 import katex from "katex";
 import type { HastPluginDefinition, MdastPluginDefinition } from "satteri";
-import en from "../i18n/lang/en";
-import zhCN from "../i18n/lang/zh-CN";
+import { staticTranslations } from "../i18n/static";
 import type { UIStrings } from "../i18n/types";
 
 /** Callout kinds, matching GitHub alert types. Unknown kinds render as `note`. */
@@ -26,15 +25,9 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
  * this module also runs in the Astro config context, where import.meta.glob
  * is not available. Only the callout labels are needed here.
  */
-const BUNDLES: Record<string, UIStrings> = { en, "zh-CN": zhCN };
-
 /** Callout titles in the site's language. */
 function calloutLabels(locale: string): UIStrings["callout"] {
-  const bundle =
-    BUNDLES[locale] ??
-    BUNDLES[locale.split("-")[0].toLowerCase()] ??
-    BUNDLES.en;
-  return bundle.callout;
+  return staticTranslations(locale).callout;
 }
 
 // Sätteri's mdast nodes are plain objects; keep the plugin loosely typed.

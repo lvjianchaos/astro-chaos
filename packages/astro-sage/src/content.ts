@@ -41,12 +41,14 @@ export function defineSageCollections({ author }: { author: string }) {
         timezone: z.string().optional(),
         /** Show the table of contents rail. */
         toc: z.boolean().default(true),
+        /**
+         * Reading column width: "cjk" counts 全角字 (36–40 per line),
+         * "latin" counts characters (66–71 per line). Defaults to detecting
+         * it from the post's content.
+         */
+        measure: z.enum(["cjk", "latin"]).optional(),
         /** Load KaTeX styles. Set false on posts without math. */
         math: z.boolean().default(true),
-        /** Show the "Cite this post" block (when citations are enabled). */
-        cite: z.boolean().default(true),
-        /** Show comments (when a comments provider is configured). */
-        comments: z.boolean().default(true),
       }),
   });
 

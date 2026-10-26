@@ -37,6 +37,29 @@ export type Rendered = {
 export type DiagramOptions = {
   /** Where rendered SVGs are cached. Commit this folder so CI never needs a browser. */
   cacheDir: string;
+  /** Localized strings for the expand button and the viewer toolbar. */
+  labels?: DiagramLabels;
+};
+
+/** Strings the diagram UI shows (localized). */
+export type DiagramLabels = {
+  /** Expand button's aria-label; `{{label}}` is replaced by the caption. */
+  open: string;
+  /** Expand button's tooltip. */
+  zoom: string;
+  zoomIn: string;
+  zoomOut: string;
+  /** Mode toggle: pick text out of the diagram. */
+  select: string;
+  /** Mode toggle while active. */
+  selecting: string;
+  close: string;
+  /** Hint line under the stage. */
+  hint: string;
+  /** The viewer's own aria-label. */
+  viewerLabel: string;
+  /** The toolbar's aria-label. */
+  controlsLabel: string;
 };
 
 const hash = (...parts: string[]) =>

@@ -346,6 +346,9 @@
     /* ---------- Code (Expressive Code renders its own frames) ---------- */
     & .expressive-code {
       margin-block: 1.6em;
+      /* The prose letter-spacing (0.01em for Chinese) would widen the
+         monospace code; reset it inside code blocks. */
+      letter-spacing: normal;
     }
 
     /* ---------- Callouts ---------- */

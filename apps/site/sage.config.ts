@@ -3,15 +3,15 @@ import { defineSageConfig } from "astro-sage";
 export default defineSageConfig({
   site: {
     url: "https://io.chaos-ljc.top/",
-    title: "IO",
+    title: "CHAOS·IO",
     description: "算法题解、算法笔记与题目归档。",
-    author: "lvjianchaos",
+    author: "chaos",
     repo: "https://github.com/lvjianchaos/astro-chaos",
     lang: "zh-CN",
     timezone: "Asia/Shanghai",
   },
   home: {
-    title: "IO",
+    title: "CHAOS·IO",
     intro: "这里记录算法题解、算法笔记，以及一些值得留存的题目。",
   },
   posts: {

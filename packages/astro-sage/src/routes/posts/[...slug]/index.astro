@@ -7,7 +7,7 @@ import Footer from "@sage/components/Footer.astro";
 import Datetime from "@sage/components/Datetime.astro";
 import Tag from "@sage/components/Tag.astro";
 import CategoryBadge from "@sage/components/CategoryBadge.astro";
-import { getPostSlug, getPostUrl } from "@sage/utils/getPostPaths";
+import { getPostSlug } from "@sage/utils/getPostPaths";
 import { getSortedPosts } from "@sage/utils/getSortedPosts";
 import { slugifyStr } from "@sage/utils/slugify";
 import EditPost from "./_components/EditPost.astro";
@@ -15,9 +15,7 @@ import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import config from "@sage/config";
 import TableOfContents from "@sage/components/TableOfContents.astro";
 import SeriesNav from "@sage/components/SeriesNav.astro";
-import Comments from "@sage/components/Comments.astro";
-import Citation from "@sage/components/Citation.astro";
-import { readingTime } from "@sage/utils/readingTime";
+import { readingTime, detectMeasure } from "@sage/utils/readingTime";
 import { getSeriesPosts } from "@sage/utils/getSeries";
 import { postFilter } from "@sage/utils/postFilter";
 import { useTranslations, tplStr } from "@sage/i18n";
@@ -91,6 +89,8 @@ const {
 
 const { Content, headings } = await render(post);
 const minutes = readingTime(post.body);
+// Chinese posts use the 全角字 measure; mostly-Latin ones get the Latin one.
+const measure = post.data.measure ?? detectMeasure(post.body);
 const tocHeadings = headings.filter(
   h => h.depth >= 2 && h.depth <= 3 && h.slug !== "footnote-label"
 );
@@ -108,7 +108,13 @@ const showToc = toc && tocHeadings.length > 1;
   <Header />
 
   <main id="main-content" class="app-layout mt-10 sm:mt-14" data-pagefind-body>
-    <div class:list={["post-grid", { "has-toc": showToc }]}>
+    <div
+      class:list={[
+        "post-grid",
+        { "has-toc": showToc },
+        { "measure-latin": measure === "latin" },
+      ]}
+    >
       <header class="post-header">
         {category && (
           <p class="post-category">
@@ -156,7 +162,11 @@ const showToc = toc && tocHeadings.length > 1;
         />
       )}
 
-      <article id="article" class="app-prose post-body">
+      <article
+        id="article"
+        class="app-prose post-body"
+        data-link-label={t.a11y.linkToSection}
+      >
         <Content />
       </article>
 
@@ -167,20 +177,6 @@ const showToc = toc && tocHeadings.length > 1;
       )}
 
       <footer class="post-footer" data-pagefind-ignore>
-        {config.citation.enabled && post.data.cite && (
-          <Citation
-            title={title}
-            url={
-              new URL(
-                getPostUrl(post.id, post.filePath, locale),
-                Astro.site ?? Astro.url
-              ).href
-            }
-            pubDatetime={pubDatetime}
-            author={post.data.author}
-            slug={getPostSlug(post.id, post.filePath)}
-          />
-        )}
         {seriesPosts.length > 1 && (
           <SeriesNav posts={seriesPosts} current={post.id} series={series!} />
         )}
@@ -188,8 +184,6 @@ const showToc = toc && tocHeadings.length > 1;
         <div class="flex flex-wrap items-center justify-between gap-4">
           <EditPost {hideEditPost} {post} />
         </div>
-
-        {config.comments.provider && post.data.comments && <Comments />}
 
         <hr class="border-border" />
 
@@ -202,13 +196,15 @@ const showToc = toc && tocHeadings.length > 1;
 
 <script>
   // Hover anchors on headings (tiny; avoids an extra build plugin).
+  const article = document.querySelector<HTMLElement>("#article");
+  const linkLabel = article?.dataset.linkLabel ?? "Link to section: ";
   for (const h of document.querySelectorAll<HTMLElement>(
     "#article :is(h2, h3, h4)[id]"
   )) {
     const a = document.createElement("a");
     a.href = `#${h.id}`;
     a.className = "heading-anchor";
-    a.ariaLabel = `Link to section: ${h.textContent}`;
+    a.ariaLabel = `${linkLabel}${h.textContent}`;
     a.textContent = "#";
     h.prepend(a);
   }

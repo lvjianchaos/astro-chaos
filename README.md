@@ -66,6 +66,7 @@ pnpm lint       # oxlint
 ```bash
 pnpm --filter @io/site exec node scripts/screenshot.mjs   # 截图（light/dark，可视回归）
 pnpm --filter @io/site test:search                         # 中文搜索烟测
+pnpm --filter @io/site prune:fonts                        # 裁掉没用到的字体分片（build 已自动执行）
 ```
 
 ---
@@ -89,8 +90,7 @@ pnpm --filter @io/site test:search                         # 中文搜索烟测
 | `featured` | | 首页精选 |
 | `toc` | | 是否显示右侧目录，默认 `true` |
 | `math` | | 是否加载 KaTeX 样式，默认 `true`；纯文字文章可设 `false` |
-| `cite` | | 是否显示"引用本文"块，默认 `true` |
-| `comments` | | 是否显示评论，默认 `true`（需配置评论服务） |
+| `measure` | | 栏宽口径：`cjk` 按全角字、`latin` 按字符；默认按正文自动判断 |
 | `slug` | | 覆盖 URL 片段（默认取文件路径） |
 | `canonicalURL` / `timezone` / `hideEditPost` | | 杂项 |
 
@@ -167,8 +167,7 @@ int main() {}
 | `features.editPost` | `{ enabled: false }` | `{ enabled: true, url }` 显示"编辑此页" |
 | `features.search` | `"pagefind"` | 设为 `false` 关闭搜索 |
 | `socials` | `[]` | 站点社交图标，`name` 取 `src/assets/icons/socials/` 里的文件名 |
-| `citation.enabled` / `author` / `publication` | `true` / 文章作者 / 站点域名 | "引用本文"块 |
-| `comments` | `{ provider: false }` | `utterances` 或 `giscus`，默认关闭 |
+| `typography.paragraphIndent` | `false` | 首行缩进 2 个字符（中文排版习惯） |
 
 社交图标可选：bluesky、facebook、github、hackernews、linkedin、mail、pinterest、reddit、
 telegram、whatsapp、x。
@@ -183,11 +182,12 @@ telegram、whatsapp、x。
 ## 读者侧的能力
 
 - **固定目录**：≥1280px 时固定在右侧并高亮当前小节，窄屏折叠成"本页目录"块
+- **阅读时长**：汉字按 ~400 字/分、拉丁词按 ~230 词/分估算，中文不会被算成"1 分钟"
+- **自适应栏宽**：中文按全角字（36–40 字/行）、纯西文按字符（66–71 字符/行）自动切换
+- **中文界面**：搜索框、图表查看器、提示块等全部随语言切换
 - **搜索**：Pagefind，中文按 `charabia` 分词，`/search`
 - **系列**：索引页、每系列页、"第 N 篇，共 M 篇"导航
 - **标签 / 分类**：带计数的索引页，文章页与卡片上有徽标
-- **引用块**：折叠的"引用本文"，带文本引用与可复制的 BibTeX
-- **评论**：可选 utterances / giscus，按需加载、跟随亮暗主题，默认关闭
 - **RSS**：`/rss.xml` 输出全文（绝对链接、MathML、内联图表，无脚本）
 - **SEO**：canonical、Open Graph / Twitter 卡片、JSON-LD、sitemap、robots.txt
 - **无障碍**：跳转链接、焦点样式、有标签的控件

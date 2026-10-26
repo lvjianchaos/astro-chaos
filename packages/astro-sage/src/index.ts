@@ -34,6 +34,7 @@ import {
   type WikiLinkOptions,
 } from "./markdown/links";
 import { BLOG_PATH } from "./paths";
+import { staticTranslations } from "./i18n/static";
 import {
   SYNTAX_CANDIDATES,
   customizeCodeTheme,
@@ -301,6 +302,7 @@ export default function astroSage(config: SageConfig): AstroIntegration {
                   cacheDir: fileURLToPath(
                     new URL(".sage-cache/diagrams/", astroConfig.root)
                   ),
+                  labels: staticTranslations(config.site.lang ?? "en").diagram,
                 }),
                 katexPlugin,
                 calloutsPlugin(config.site.lang ?? "en"),

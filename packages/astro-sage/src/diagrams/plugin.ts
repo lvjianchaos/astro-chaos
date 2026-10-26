@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import type { MdastPluginDefinition } from "satteri";
 import { rawHtml } from "../markdown";
 import {
+  type DiagramLabels,
   type DiagramOptions,
   type Rendered,
   normalizeScene,
@@ -15,6 +16,20 @@ import { parseShareUrl } from "./excalidraw-share";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Node = any;
+
+/** English fallback, used when a site doesn't pass labels. */
+const DEFAULT_DIAGRAM_LABELS: DiagramLabels = {
+  open: "Open {{label}} in the viewer",
+  zoom: "Zoom (or double-click)",
+  zoomIn: "Zoom in",
+  zoomOut: "Zoom out",
+  select: "Select text",
+  selecting: "Selecting text",
+  close: "Close viewer",
+  hint: "Scroll or pinch to zoom · drag to pan · 0 fit · 1 actual size · Esc close",
+  viewerLabel: "Diagram viewer",
+  controlsLabel: "Diagram controls",
+};
 
 /** Breakout size from a fence meta string or image title: `wide` or `full`. */
 export type Size = "column" | "wide" | "full";
@@ -53,7 +68,8 @@ function figure(
   r: Rendered,
   caption?: string,
   invertInDark = false,
-  size: Size = "column"
+  size: Size = "column",
+  labels?: DiagramLabels
 ) {
   const label = caption || r.title || `${kind} diagram`;
   const desc = r.description
@@ -62,11 +78,15 @@ function figure(
   const dark = invertInDark
     ? ""
     : `<div class="diagram-svg diagram-dark">${fluid(r.dark)}</div>`;
-  return `<figure class="diagram${invertInDark ? " diagram-invert" : ""}${size === "column" ? "" : ` figure-${size}`}" data-diagram="${kind}">
+  const l = labels ?? DEFAULT_DIAGRAM_LABELS;
+  const open = esc(l.open.replace("{{label}}", label));
+  // The viewer picks its own strings up from here.
+  const viewerLabels = esc(JSON.stringify(l));
+  return `<figure class="diagram${invertInDark ? " diagram-invert" : ""}${size === "column" ? "" : ` figure-${size}`}" data-diagram="${kind}" data-dv-labels="${viewerLabels}">
 <div class="diagram-canvas" role="img" aria-label="${esc(label)}">
 <div class="diagram-svg diagram-light">${fluid(r.light)}</div>${dark}
 </div>${desc}
-<button type="button" class="diagram-expand" aria-label="Open ${esc(label)} in viewer" title="Zoom (or double-click)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+<button type="button" class="diagram-expand" aria-label="${open}" title="${esc(l.zoom)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
 ${caption ? `<figcaption>${esc(caption)}</figcaption>` : ""}
 </figure>`;
 }
@@ -112,14 +132,16 @@ export function diagramsPlugin(opts: DiagramOptions): MdastPluginDefinition {
                 await renderMermaid(node.value, opts),
                 caption,
                 false,
-                size
+                size,
+                opts.labels
               )
             : figure(
                 "excalidraw",
                 await renderExcalidraw(normalizeScene(node.value), opts),
                 caption,
                 false,
-                size
+                size,
+                opts.labels
               );
       } catch (e) {
         html = fallback(
@@ -148,7 +170,8 @@ export function diagramsPlugin(opts: DiagramOptions): MdastPluginDefinition {
             await renderExcalidraw(scene, opts),
             img.alt,
             false,
-            size
+            size,
+            opts.labels
           );
         } else {
           const text = await readFile(
@@ -161,14 +184,16 @@ export function diagramsPlugin(opts: DiagramOptions): MdastPluginDefinition {
                 prepareExcalidrawSvg(text),
                 img.alt,
                 true,
-                size
+                size,
+                opts.labels
               )
             : figure(
                 "excalidraw",
                 await renderExcalidraw(normalizeScene(text), opts),
                 img.alt,
                 false,
-                size
+                size,
+                opts.labels
               );
         }
       } catch (e) {

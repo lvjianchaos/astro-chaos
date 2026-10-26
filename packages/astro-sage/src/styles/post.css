@@ -5,6 +5,18 @@
   justify-content: center;
   row-gap: 2rem;
 }
+
+/*
+ * Mostly-Latin posts read best at 66–71 characters per line, not the
+ * 36–40 全角字 of a Chinese column. The class is set by the post route when
+ * the content (or the `measure` frontmatter) says so.
+ */
+.post-grid.measure-latin {
+  --char: calc(var(--text-body) * 0.487);
+  --measure-min: calc(var(--char) * 66);
+  --measure-max: calc(var(--char) * 71);
+  --measure: clamp(var(--measure-min), 44vw, var(--measure-max));
+}
 @media (min-width: 70rem) {
   .post-grid.has-toc {
     grid-template-columns: minmax(0, var(--measure)) var(--rail);

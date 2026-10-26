@@ -1,6 +1,5 @@
 export interface UIStrings {
   nav: {
-    home: string;
     posts: string;
     series: string;
     tags: string;
@@ -10,14 +9,10 @@ export interface UIStrings {
     search: string;
   };
   post: {
-    publishedAt: string;
     updatedAt: string;
     tagLabel: string;
-    categoryLabel: string;
     minRead: string;
     seriesPart: string;
-    backToTop: string;
-    goBack: string;
     editPage: string;
     previousPost: string;
     nextPost: string;
@@ -25,38 +20,23 @@ export interface UIStrings {
   pagination: {
     prev: string;
     next: string;
-    page: string;
   };
   home: {
-    socialLinks: string;
     featured: string;
     recentPosts: string;
     allPosts: string;
   };
   footer: {
-    copyright: string;
-    allRightsReserved: string;
     credit: string;
-  };
-  citation: {
-    title: string;
-    intro: string;
-    or: string;
-    copy: string;
   };
   pages: {
     tagTitle: string;
-    tagDesc: string;
-
     tagsTitle: string;
     tagsDesc: string;
-
     postsTitle: string;
     postsDesc: string;
-
     archivesTitle: string;
     archivesDesc: string;
-
     seriesTitle: string;
     seriesDesc: string;
     categoriesTitle: string;
@@ -74,16 +54,45 @@ export interface UIStrings {
     warning: string;
     caution: string;
   };
+  /** Pagefind's search widget. */
+  search: {
+    placeholder: string;
+    clear: string;
+    label: string;
+    loadMore: string;
+    oneResult: string;
+    manyResults: string;
+    zeroResults: string;
+    noResultsFor: string;
+    oneResultFor: string;
+    manyResultsFor: string;
+    resultsLabel: string;
+    filters: string;
+    searching: string;
+  };
+  /** The diagram viewer and its expand button. */
+  diagram: {
+    open: string;
+    zoom: string;
+    zoomIn: string;
+    zoomOut: string;
+    select: string;
+    selecting: string;
+    close: string;
+    hint: string;
+    viewerLabel: string;
+    controlsLabel: string;
+  };
   a11y: {
     skipToContent: string;
     openMenu: string;
-    closeMenu: string;
     toggleTheme: string;
-    searchPlaceholder: string;
-    noResults: string;
     goToPreviousPage: string;
     goToNextPage: string;
     tableOfContents: string;
+    mainNavigation: string;
+    pagination: string;
+    linkToSection: string;
   };
   notFound: {
     title: string;

@@ -5,12 +5,51 @@
 const MIN = 0.1;
 const MAX = 8;
 
+type Labels = {
+  open: string;
+  zoom: string;
+  zoomIn: string;
+  zoomOut: string;
+  select: string;
+  selecting: string;
+  close: string;
+  hint: string;
+  viewerLabel: string;
+  controlsLabel: string;
+};
+
+const DEFAULT_LABELS: Labels = {
+  open: "Open {{label}} in the viewer",
+  zoom: "Zoom (or double-click)",
+  zoomIn: "Zoom in",
+  zoomOut: "Zoom out",
+  select: "Select text",
+  selecting: "Selecting text",
+  close: "Close viewer",
+  hint: "Scroll or pinch to zoom · drag to pan · 0 fit · 1 actual size · Esc close",
+  viewerLabel: "Diagram viewer",
+  controlsLabel: "Diagram controls",
+};
+
+/** The strings the build wrote onto the figure element. */
+function labels(): Labels {
+  const raw =
+    document.querySelector<HTMLElement>("[data-dv-labels]")?.dataset.dvLabels;
+  if (!raw) return DEFAULT_LABELS;
+  try {
+    return { ...DEFAULT_LABELS, ...(JSON.parse(raw) as Partial<Labels>) };
+  } catch {
+    return DEFAULT_LABELS;
+  }
+}
+
 let dialog: HTMLDialogElement | undefined;
 let stage: HTMLElement;
 let content: HTMLElement;
 let zoomOut: HTMLOutputElement;
 let modeBtn: HTMLButtonElement;
 let state = { scale: 1, x: 0, y: 0, w: 0, h: 0 };
+let L: Labels = DEFAULT_LABELS;
 
 function apply() {
   content.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
@@ -46,25 +85,26 @@ function actual() {
 function setMode(mode: "pan" | "select") {
   stage.dataset.mode = mode;
   modeBtn.setAttribute("aria-pressed", String(mode === "select"));
-  modeBtn.textContent = mode === "select" ? "Selecting text" : "Select text";
+  modeBtn.textContent = mode === "select" ? L.selecting : L.select;
 }
 
 function build() {
+  L = labels();
   dialog = document.createElement("dialog");
   dialog.className = "diagram-viewer";
-  dialog.setAttribute("aria-label", "Diagram viewer");
+  dialog.setAttribute("aria-label", L.viewerLabel);
   dialog.innerHTML = `
-    <div class="dv-bar" role="toolbar" aria-label="Diagram controls">
-      <button type="button" data-act="out" aria-label="Zoom out">−</button>
+    <div class="dv-bar" role="toolbar" aria-label="${L.controlsLabel}">
+      <button type="button" data-act="out" aria-label="${L.zoomOut}">−</button>
       <output aria-live="polite">100%</output>
-      <button type="button" data-act="in" aria-label="Zoom in">+</button>
+      <button type="button" data-act="in" aria-label="${L.zoomIn}">+</button>
       <button type="button" data-act="fit">Fit</button>
       <button type="button" data-act="actual">1:1</button>
-      <button type="button" data-act="mode" aria-pressed="false">Select text</button>
-      <button type="button" data-act="close" aria-label="Close viewer">✕</button>
+      <button type="button" data-act="mode" aria-pressed="false">${L.select}</button>
+      <button type="button" data-act="close" aria-label="${L.close}">✕</button>
     </div>
     <div class="dv-stage" data-mode="pan"><div class="dv-content"></div></div>
-    <p class="dv-hint">Scroll or pinch to zoom · drag to pan · 0 fit · 1 actual size · Esc close</p>`;
+    <p class="dv-hint">${L.hint}</p>`;
   document.body.append(dialog);
   stage = dialog.querySelector(".dv-stage")!;
   content = dialog.querySelector(".dv-content")!;

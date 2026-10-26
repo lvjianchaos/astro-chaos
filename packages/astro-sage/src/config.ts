@@ -17,13 +17,11 @@ const config: ResolvedSageConfig = {
     googleVerification:
       userConfig.site.googleVerification || PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
-  citation: {
-    ...userConfig.citation,
-    enabled: userConfig.citation?.enabled ?? true,
+  typography: {
+    serif: userConfig.typography?.serif ?? "newsreader",
+    paragraphIndent: userConfig.typography?.paragraphIndent ?? false,
   },
-  typography: { serif: userConfig.typography?.serif ?? "newsreader" },
   home: userConfig.home ?? {},
-  comments: userConfig.comments ?? { provider: false },
   posts: {
     perPage: userConfig.posts?.perPage ?? 4,
     perIndex: userConfig.posts?.perIndex ?? 4,

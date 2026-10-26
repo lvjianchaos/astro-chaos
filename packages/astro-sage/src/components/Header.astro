@@ -59,7 +59,10 @@ const links = [
       {site.title}
     </a>
 
-    <nav aria-label="Main" class="flex items-center gap-1 sm:gap-2">
+    <nav
+      aria-label={t.a11y.mainNavigation}
+      class="flex items-center gap-1 sm:gap-2"
+    >
       <ul class="hidden items-center gap-5 md:flex">
         {links.map(l => (
           <li>
@@ -90,7 +93,7 @@ const links = [
           id="theme-btn"
           class="icon-btn"
           title={t.a11y.toggleTheme}
-          aria-label="auto"
+          aria-label={t.a11y.toggleTheme}
           aria-live="polite"
         >
           <IconMoon class="size-5 dark:hidden" />

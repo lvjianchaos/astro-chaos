@@ -57,7 +57,7 @@ interface FeaturesConfig {
 
 interface SocialLink {
   /**
-   * Must match an SVG filename in src/assets/icons/socials/.
+   * Must match a filename in src/assets/icons/socials/.
    * e.g. "github" → src/assets/icons/socials/github.svg
    */
   name: string;
@@ -88,6 +88,11 @@ interface TypographyConfig {
    * DEFAULT_SERIF_FALLBACKS / DEFAULT_MONO_FALLBACKS.
    */
   fallbacks?: { serif?: string[]; mono?: string[] };
+  /**
+   * Indent paragraphs by two characters (中文首行缩进). Defaults to false:
+   * algorithm write-ups usually separate paragraphs with blank lines.
+   */
+  paragraphIndent?: boolean;
 }
 
 interface HomeConfig {
@@ -97,67 +102,10 @@ interface HomeConfig {
   intro?: string;
 }
 
-/** Light and dark theme names (or theme CSS URLs) for an embedded widget. */
-interface EmbedTheme {
-  light?: string;
-  dark?: string;
-}
-
-/**
- * Comments. `false` (default) renders no comments UI and ships no JS.
- *
- * - `"utterances"`: GitHub Issues via utteranc.es. Static, host-agnostic; install
- *   the utterances GitHub app on `repo`. GitHub sign-in only.
- * - `"giscus"`: GitHub Discussions via giscus.app. Static, host-agnostic; get
- *   the ids from https://giscus.app. Reactions, replies, custom theme CSS.
- */
-type CommentsConfig =
-  | { provider: false }
-  | {
-      provider: "utterances";
-      /** "owner/name" of a public repo with the utterances app installed. */
-      repo: string;
-      /** How posts map to issues. Defaults to "pathname". */
-      issueTerm?: "pathname" | "url" | "title" | "og:title";
-      /** Label added to new issues, e.g. "comments". */
-      label?: string;
-      /** utterances themes. Defaults: github-light / gruvbox-dark. */
-      theme?: EmbedTheme;
-    }
-  | {
-      provider: "giscus";
-      /** "owner/name" of a public repo with Discussions and the giscus app. */
-      repo: string;
-      repoId: string;
-      category: string;
-      categoryId: string;
-      /** How posts map to discussions. Defaults to "pathname". */
-      mapping?: "pathname" | "url" | "title" | "og:title";
-      /** Show reactions on the post. Defaults to true. */
-      reactions?: boolean;
-      /** Comment box above or below the thread. Defaults to "bottom". */
-      inputPosition?: "top" | "bottom";
-      /** giscus theme names or CSS URLs. Defaults: gruvbox_light / gruvbox_dark. */
-      theme?: EmbedTheme;
-    };
-
-interface CitationConfig {
-  /** Show the "Cite this post" block (text + BibTeX). Defaults to true. */
-  enabled?: boolean;
-  /** Name as it should appear in citations, e.g. "Sheth, Chintak". Defaults to "Last, First" of the post author. */
-  author?: string;
-  /** Publication / journal field. Defaults to the site hostname. */
-  publication?: string;
-}
-
-export type { CommentsConfig, EmbedTheme };
-
 export interface SageConfig {
   site: SiteConfig;
-  citation?: CitationConfig;
   typography?: TypographyConfig;
   home?: HomeConfig;
-  comments?: CommentsConfig;
   posts?: PostsConfig;
   features?: FeaturesConfig;
   /** Social profile links shown in header/footer */
@@ -174,10 +122,8 @@ type ResolvedSiteConfig = Required<
 
 export interface ResolvedSageConfig {
   site: ResolvedSiteConfig;
-  citation: { enabled: boolean } & Omit<CitationConfig, "enabled">;
   typography: Required<Pick<TypographyConfig, "serif">> & TypographyConfig;
   home: HomeConfig;
-  comments: CommentsConfig;
   posts: Required<PostsConfig>;
   features: Required<FeaturesConfig>;
   socials: SocialLink[];

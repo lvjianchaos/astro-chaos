@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build && pagefind --site dist",
+    "build": "astro check && astro build && node scripts/prune-fonts.mjs && pagefind --site dist",
+    "prune:fonts": "node scripts/prune-fonts.mjs",
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
