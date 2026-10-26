@@ -80,13 +80,6 @@ export default {
     warning: "Warning",
     caution: "Caution",
   },
-  problem: {
-    source: "Source",
-    difficulty: "Difficulty",
-    limits: "Limits",
-    statement: "Statement",
-    tags: "Tags",
-  },
   a11y: {
     skipToContent: "Skip to content",
     openMenu: "Open menu",

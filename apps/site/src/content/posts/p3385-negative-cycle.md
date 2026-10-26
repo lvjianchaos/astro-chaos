@@ -3,15 +3,11 @@ title: "「洛谷 P3385」负环复盘"
 description: "用 SPFA 判负环，真正卡住我的不是算法，而是三个容易写错的细节。"
 pubDatetime: 2026-10-24T20:00:00+08:00
 category: 题目
-tags: [SPFA, 最短路, 洛谷, 复盘]
-problem:
-  source: 洛谷
-  id: P3385
-  url: https://www.luogu.com.cn/problem/P3385
-  difficulty: 普及+
-  limits: "1s / 128MB"
-  tags: [最短路, 负环, SPFA]
+tags: [洛谷, P3385, SPFA, 最短路, 复盘]
 ---
+
+> - **题目**：洛谷 [P3385 【模板】负环](https://www.luogu.com.cn/problem/P3385) · 普及+
+> - **时空限制**：1s / 128MB
 
 这是一篇**复盘**，不是完整题解。题目本身很简单：给一张有向图，判断图中是否存在负环。
 

@@ -80,13 +80,6 @@ export default {
     warning: "警告",
     caution: "危险",
   },
-  problem: {
-    source: "来源",
-    difficulty: "难度",
-    limits: "时空限制",
-    statement: "题目链接",
-    tags: "题目标签",
-  },
   a11y: {
     skipToContent: "跳到正文",
     openMenu: "打开菜单",

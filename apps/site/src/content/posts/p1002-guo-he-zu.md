@@ -4,15 +4,11 @@ description: "棋盘上的路径计数：从状态设计到空间压缩，一步
 pubDatetime: 2026-10-18T09:00:00+08:00
 category: 题解
 series: 动态规划入门
-tags: [动态规划, 洛谷, 路径计数]
-problem:
-  source: 洛谷
-  id: P1002
-  url: https://www.luogu.com.cn/problem/P1002
-  difficulty: 普及-
-  limits: "1s / 128MB"
-  tags: [动态规划, 路径计数]
+tags: [洛谷, P1002, 动态规划, 路径计数]
 ---
+
+> - **题目**：洛谷 [P1002 过河卒](https://www.luogu.com.cn/problem/P1002) · 普及-
+> - **时空限制**：1s / 128MB
 
 ## 题意
 

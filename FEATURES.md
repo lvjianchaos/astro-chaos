@@ -1,8 +1,8 @@
 # AstroSage features
 
 > **This is the `io-chaos` fork.** It adds a Chinese-first typography layer, a
-> `category` field (article type) on top of `tags`/`series`, a `problem`
-> metadata block rendered as a problem card, and a `zh-CN` UI bundle.
+> `category` field (article type) on top of `tags`/`series`, and a `zh-CN`
+> UI bundle.
 > See [`docs/decisions/006-chinese-typography.md`](docs/decisions/006-chinese-typography.md)
 > for the typography rationale.
 
@@ -10,7 +10,7 @@ A reference for agents and contributors: what the theme supports, how to switch 
 
 Working examples live in the site:
 
-- [`apps/site/src/content/posts/p1002-guo-he-zu.md`](apps/site/src/content/posts/p1002-guo-he-zu.md) — a 题解 with a problem card, KaTeX and a C++ block.
+- [`apps/site/src/content/posts/p1002-guo-he-zu.md`](apps/site/src/content/posts/p1002-guo-he-zu.md) — a 题解 with the problem statement in a quote block, KaTeX and a C++ block.
 - [`apps/site/src/content/posts/monotonic-stack.md`](apps/site/src/content/posts/monotonic-stack.md) — an 算法 note with a Mermaid diagram and a table.
 - [`apps/site/src/content/posts/p3385-negative-cycle.md`](apps/site/src/content/posts/p3385-negative-cycle.md) — a 题目 retrospective with a callout and a highlighted code range.
 - [`apps/site/src/content/pages/about.md`](apps/site/src/content/pages/about.md) — a page.
@@ -99,7 +99,6 @@ Schema: [`packages/astro-sage/src/content.ts`](packages/astro-sage/src/content.t
 | `tags` | `["others"]` | Tag pages with counts |
 | `category` | — | Article type (题解 / 题目 / 算法): category pages, a badge on posts and cards |
 | `series` | — | Series pages and "Part N of M" navigation |
-| `problem` | — | Problem metadata (`source`, `id`, `url`, `difficulty`, `limits`, `tags`) rendered as a problem card |
 | `featured` | — | Featured on the home page |
 | `draft` | — | Never built |
 | `ogImage` | generated | Image import or URL |
@@ -146,7 +145,6 @@ Diagrams need Chromium at build time (`pnpm add -D playwright && npx playwright 
 | Series | Index, per-series pages, part navigation; series label links to its page; the Series nav link appears only when a published post has a `series` | `series-part-two.md` |
 | Tags | Mono chips with counts, at the top of posts | any post |
 | Categories | Article-type pages with counts; badge on posts and cards | any post with a `category` |
-| Problem card | Source, id, difficulty, limits, platform tags and a link to the statement | posts with a `problem` block |
 | Search | Pagefind at `/search` | — |
 | Citation | Folded "Cite this post" with text citation and BibTeX copy | bottom of any post |
 | Comments | utterances or giscus (GitHub sign-in), lazy-loaded, follows light/dark; off by default; `comments: false` per post | README › Comments; any demo post |

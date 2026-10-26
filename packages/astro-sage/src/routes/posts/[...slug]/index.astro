@@ -7,7 +7,6 @@ import Footer from "@sage/components/Footer.astro";
 import Datetime from "@sage/components/Datetime.astro";
 import Tag from "@sage/components/Tag.astro";
 import CategoryBadge from "@sage/components/CategoryBadge.astro";
-import ProblemCard from "@sage/components/ProblemCard.astro";
 import { getPostSlug, getPostUrl } from "@sage/utils/getPostPaths";
 import { getSortedPosts } from "@sage/utils/getSortedPosts";
 import { slugifyStr } from "@sage/utils/slugify";
@@ -84,7 +83,6 @@ const {
   timezone,
   tags,
   category,
-  problem,
   hideEditPost,
   series,
   toc,
@@ -159,7 +157,6 @@ const showToc = toc && tocHeadings.length > 1;
       )}
 
       <article id="article" class="app-prose post-body">
-        {problem && <ProblemCard {problem} />}
         <Content />
       </article>
 

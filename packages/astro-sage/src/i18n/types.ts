@@ -74,13 +74,6 @@ export interface UIStrings {
     warning: string;
     caution: string;
   };
-  problem: {
-    source: string;
-    difficulty: string;
-    limits: string;
-    statement: string;
-    tags: string;
-  };
   a11y: {
     skipToContent: string;
     openMenu: string;

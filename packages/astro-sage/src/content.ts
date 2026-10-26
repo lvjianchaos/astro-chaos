@@ -35,26 +35,6 @@ export function defineSageCollections({ author }: { author: string }) {
         category: z.string().optional(),
         /** Groups posts into an ordered series (ordered by pubDatetime). */
         series: z.string().optional(),
-        /**
-         * Problem metadata for 题目 / 题解 articles: where the problem comes
-         * from, its number, the statement link and its limits.
-         */
-        problem: z
-          .object({
-            /** Platform name, e.g. "Codeforces", "AtCoder", "洛谷". */
-            source: z.string().optional(),
-            /** Problem id on that platform, e.g. "1909E". */
-            id: z.string().optional(),
-            /** Statement URL. */
-            url: z.url().optional(),
-            /** Difficulty, e.g. "1900" or "普及+/提高". */
-            difficulty: z.string().optional(),
-            /** Time / memory limits, e.g. "2s / 256MB". */
-            limits: z.string().optional(),
-            /** Tags the platform itself assigns to the problem. */
-            tags: z.array(z.string()).optional(),
-          })
-          .optional(),
         description: z.string(),
         canonicalURL: z.string().optional(),
         hideEditPost: z.boolean().optional(),
