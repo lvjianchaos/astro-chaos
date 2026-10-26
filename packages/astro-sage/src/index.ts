@@ -173,10 +173,8 @@ const ROUTES: Array<[pattern: string, entry: string]> = [
   ["/404", "routes/404.astro"],
   ["/about", "routes/about.astro"],
   ["/archives", "routes/archives/index.astro"],
-  ["/og.png", "routes/og.png.ts"],
   ["/posts/[...page]", "routes/posts/[...page].astro"],
   ["/posts/[...slug]", "routes/posts/[...slug]/index.astro"],
-  ["/posts/[...slug]/index.png", "routes/posts/[...slug]/index.png.ts"],
   ["/robots.txt", "routes/robots.txt.ts"],
   ["/rss.xml", "routes/rss.xml.ts"],
   ["/search", "routes/search.astro"],
@@ -199,8 +197,6 @@ const BUILD_ONLY_DEPS = [
   "@tailwindcss/vite",
   "@tailwindcss/oxide",
   "tailwindcss",
-  "satori",
-  "sharp",
 ];
 
 /**

@@ -9,8 +9,8 @@ interface SiteConfig {
   author: string;
   /** Author profile URL (used in structured data) */
   profile?: string;
-  /** Fallback OG image filename in /public, e.g. "og.jpg" */
-  ogImage?: string;
+  /** Link to this site's source repository (shown in the footer). */
+  repo?: string;
   /** HTML lang attribute, defaults to "en" */
   lang?: string;
   /** IANA timezone for post dates, e.g. "Asia/Bangkok" */
@@ -36,12 +36,6 @@ interface PostsConfig {
 interface FeaturesConfig {
   /** Enable light/dark mode toggle. Defaults to true. */
   lightAndDarkMode?: boolean;
-  /**
-   * Generate dynamic OG images per post and provide `/og.png` when the static
-   * `public/{site.ogImage}` file is absent. When false, that file is required
-   * for the default layout OG image (build fails if missing).
-   */
-  dynamicOgImage?: boolean;
   /** Show the /archives page and link it in nav. Defaults to true. */
   showArchives?: boolean;
   /** Show back button on post detail pages. Defaults to true. */
@@ -73,22 +67,6 @@ interface SocialLink {
    * Auto-generated if omitted: "{site.title} on GitHub", "Send an email to {site.title}", etc.
    * Override when the default wording doesn't fit.
    */
-  linkTitle?: string;
-}
-
-interface ShareLink {
-  /**
-   * Must match an SVG filename in src/assets/icons/socials/.
-   * e.g. "bluesky" → src/assets/icons/socials/bluesky.svg
-   */
-  name: string;
-  /**
-   * Share URL. Use `{url}` and `{title}` placeholders (both are encoded), e.g.
-   * "https://news.ycombinator.com/submitlink?u={url}&t={title}". Without
-   * placeholders, the encoded post URL is appended (legacy behaviour).
-   */
-  url: string;
-  /** Accessible label; defaults to "Share on <Platform>". */
   linkTitle?: string;
 }
 
@@ -184,24 +162,15 @@ export interface SageConfig {
   features?: FeaturesConfig;
   /** Social profile links shown in header/footer */
   socials?: SocialLink[];
-  /** Share links shown on post detail pages */
-  shareLinks?: ShareLink[];
 }
 
 type ResolvedSiteConfig = Required<
   Pick<
     SiteConfig,
-    | "url"
-    | "title"
-    | "description"
-    | "author"
-    | "lang"
-    | "timezone"
-    | "dir"
-    | "ogImage"
+    "url" | "title" | "description" | "author" | "lang" | "timezone" | "dir"
   >
 > &
-  Pick<SiteConfig, "profile" | "googleVerification">;
+  Pick<SiteConfig, "profile" | "repo" | "googleVerification">;
 
 export interface ResolvedSageConfig {
   site: ResolvedSiteConfig;
@@ -212,7 +181,6 @@ export interface ResolvedSageConfig {
   posts: Required<PostsConfig>;
   features: Required<FeaturesConfig>;
   socials: SocialLink[];
-  shareLinks: ShareLink[];
 }
 
 /**

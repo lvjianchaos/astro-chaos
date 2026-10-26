@@ -13,11 +13,12 @@
 [AstroPaper](https://github.com/satnaing/astro-paper) 的重构版，提供了衬线排版、固定目录、
 KaTeX、Expressive Code、Mermaid/Excalidraw 构建期渲染、Series、Pagefind 等能力。
 
-**我们在这个基座上做的三件事**（也就是本站与上游的差异）：
+**我们在这个基座上做的四件事**（也就是本站与上游的差异）：
 
 1. **中文阅读体验** —— 中文字体栈、按"全角字"计算的栏宽、中文标点处理、全中文界面与配色。
 2. **内容分类模型** —— 在 `tags` 与 `series` 之外新增 `category`（文章类型），并新增题目元信息 `problem`。
 3. **算法特化** —— 题目卡、复杂度表格、竞赛模板代码。
+4. **做减法** —— 去掉文章分享按钮、选段分享、OG 社交预览图，站点只管阅读。
 
 ## 目录结构
 
@@ -49,6 +50,13 @@ pnpm preview
 构建 Mermaid / Excalidraw 图需要 Chromium：没有 Playwright 自带的浏览器时会回退到系统
 安装的 Chrome。CI 里执行 `pnpm --filter @io/site exec playwright install --with-deps chromium`。
 渲染结果缓存在 `apps/site/.sage-cache/diagrams/`，**请提交该目录**，这样部署构建就不需要浏览器。
+
+两个开发脚本（在 `apps/site/` 下，需要先 `pnpm build`）：
+
+```bash
+pnpm --filter @io/site exec node scripts/screenshot.mjs   # 截图（light/dark，可视回归）
+pnpm --filter @io/site test:search                         # 中文搜索烟测
+```
 
 ## 写一篇题解
 
@@ -103,12 +111,19 @@ flowchart LR
 
 ## 部署
 
-产物是纯静态文件，`apps/site/dist/` 可以放到任意静态托管（Cloudflare Pages、Vercel、GitHub
-Pages、自建服务器……）。仓库里带了 `apps/site/wrangler.jsonc`，用 Cloudflare 时：
+产物是纯静态文件，`apps/site/dist/` 可以放到任意静态托管。仓库按 [Vercel](https://vercel.com)
+配置（Astro 静态站零配置）：
 
-```bash
-pnpm --filter @io/site deploy
-```
+| 项 | 值 |
+| --- | --- |
+| Build Command | `pnpm --filter @io/site build` |
+| Output Directory | `apps/site/dist` |
+| Install Command | `pnpm install` |
+
+框架预设选 **Astro** 即可；域名在 Vercel 项目设置里绑定后，记得同步更新
+`apps/site/sage.config.ts` 里的 `site.url`（它会写进 canonical 链接、RSS 与 sitemap）。
+
+若要换到别的平台，改构建命令与输出目录即可，站点本身不依赖任何特定平台。
 
 ## 出处与致谢
 

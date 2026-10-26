@@ -20,13 +20,19 @@ const t = useTranslations(locale);
 >
   <div class="border-border text-muted-foreground flex flex-col items-center justify-between gap-3 border-t py-8 text-sm sm:flex-row">
     <p>
-      © {currentYear} {config.site.author} · {t.footer.credit}{" "}
-      <a
-        class="hover:text-accent underline decoration-dotted underline-offset-4"
-        href="https://github.com/chintak/astro-sage"
-      >
-        AstroSage
-      </a>
+      © {currentYear} {config.site.author}
+      {config.site.repo && (
+        <>
+          {" · "}
+          <a
+            class="hover:text-accent underline decoration-dotted underline-offset-4"
+            href={config.site.repo}
+            rel="noopener"
+          >
+            {t.footer.credit}
+          </a>
+        </>
+      )}
     </p>
     <Socials />
   </div>

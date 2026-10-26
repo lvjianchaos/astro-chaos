@@ -28,7 +28,6 @@ Working examples live in the site:
 | Code | Expressive Code (Gruvbox), line numbers and collapsible sections plugins |
 | Math | KaTeX, rendered at build time |
 | Diagrams | Mermaid (`mermaid-isomorphic`) and Excalidraw (`@excalidraw/utils`), rendered at build time in headless Chromium (Playwright) |
-| OG images | Satori + sharp, at build time |
 | Search | Pagefind |
 | Comments (optional) | utterances (GitHub Issues) or giscus (GitHub Discussions), client-side embeds |
 | Tests | Playwright + axe-core (desktop and mobile), oxlint, Prettier |
@@ -52,6 +51,15 @@ Package entry points: `astro-sage` (integration, `defineSageConfig`), `astro-sag
 
 Content goes in `src/content/posts/` (`.md`, `.mdx`, or a folder with `index.md(x)`; files and folders starting with `_` are skipped) and `src/content/pages/`. A site needs no `src/pages/`.
 
+## 本 fork 移除的功能
+
+| 功能 | 状态 |
+|---|---|
+| 文章分享按钮条（`shareLinks`） | 已移除，主题不再有 `shareLinks` 配置 |
+| 选段分享（浮层工具条、分享为图片） | 已移除，`src/share/` 目录整体删除 |
+| OG 社交预览图（每篇 `index.png`、站点 `/og.png`） | 已移除，`utils/ogImage.ts` 删除；`features.dynamicOgImage` 与 `site.ogImage` 配置一并移除 |
+| 站点级社交图标、RSS、引用块、搜索 | 保留 |
+
 ## Configuration (`sage.config.ts`)
 
 Types: [`packages/astro-sage/src/types/config.ts`](packages/astro-sage/src/types/config.ts). Defaults: [`src/config.ts`](packages/astro-sage/src/config.ts).
@@ -60,7 +68,6 @@ Types: [`packages/astro-sage/src/types/config.ts`](packages/astro-sage/src/types
 |---|---|---|
 | `site.url` / `title` / `description` / `author` | required | `url` is the canonical origin |
 | `site.profile` | — | Author URL for structured data |
-| `site.ogImage` | `"default-og.jpg"` | Fallback OG image in `public/` |
 | `site.lang` / `timezone` / `dir` | `"en"` / `"UTC"` / `"ltr"` | |
 | `site.googleVerification` | env `PUBLIC_GOOGLE_SITE_VERIFICATION` | |
 | `typography.serif` | `"newsreader"` | or `"source-serif-4"`, `"literata"` |
@@ -70,13 +77,11 @@ Types: [`packages/astro-sage/src/types/config.ts`](packages/astro-sage/src/types
 | `posts.perPage` / `perIndex` | `4` / `4` | Listing and home page sizes |
 | `posts.scheduledPostMargin` | 15 min (ms) | Future posts publish this long before `pubDatetime` |
 | `features.lightAndDarkMode` | `true` | Theme toggle |
-| `features.dynamicOgImage` | `true` | Per-post OG images and `/og.png` |
 | `features.showArchives` | `true` | `/archives` and its nav link |
 | `features.showBackButton` | `true` | On post pages |
 | `features.editPost` | `{ enabled: false }` | `{ enabled: true, url }` adds an "Edit page" link |
 | `features.search` | `"pagefind"` | `false` removes search |
 | `socials` | `[]` | `{ name, url, linkTitle? }`; `name` is an icon in `src/assets/icons/socials/` |
-| `shareLinks` | X, LinkedIn, Bluesky, Reddit, HN, email | `{ name, url }` with `{url}` / `{title}` placeholders |
 | `citation.enabled` / `author` / `publication` | `true` / "Last, First" of post author / site host | "Cite this post" block |
 | `comments` | `{ provider: false }` | `{ provider: "utterances", repo, issueTerm?, label?, theme? }` or `{ provider: "giscus", repo, repoId, category, categoryId, mapping?, reactions?, inputPosition?, theme? }`; `theme` is `{ light, dark }` |
 
@@ -107,7 +112,7 @@ Schema: [`packages/astro-sage/src/content.ts`](packages/astro-sage/src/content.t
 
 ## Routes (injected)
 
-`/`, `/posts/[...page]`, `/posts/<slug>/` (+ `index.png` OG image), `/tags`, `/tags/<tag>/`, `/categories`, `/categories/<category>/`, `/series`, `/series/<name>`, `/archives`, `/search`, `/about`, `/404`, `/rss.xml`, `/robots.txt`, `/og.png`, sitemap. All prerendered. Post URLs mirror the folder path; a folder post (`my-post/index.mdx`) is named by its folder.
+`/`, `/posts/[...page]`, `/posts/<slug>/`, `/tags`, `/tags/<tag>/`, `/categories`, `/categories/<category>/`, `/series`, `/series/<name>`, `/archives`, `/search`, `/about`, `/404`, `/rss.xml`, `/robots.txt`, sitemap. All prerendered. Post URLs mirror the folder path; a folder post (`my-post/index.mdx`) is named by its folder.
 
 ## Writing features
 
@@ -143,13 +148,10 @@ Diagrams need Chromium at build time (`pnpm add -D playwright && npx playwright 
 | Categories | Article-type pages with counts; badge on posts and cards | any post with a `category` |
 | Problem card | Source, id, difficulty, limits, platform tags and a link to the statement | posts with a `problem` block |
 | Search | Pagefind at `/search` | — |
-| Share sheet | Platforms from `shareLinks`, copy link, native share | bottom of any post |
-| Quote sharing | Select text → toolbar: X, Bluesky, LinkedIn, email, copy, **share as image** (1200×630 card drawn in the browser), native share; links carry a text fragment | select text in any post |
 | Citation | Folded "Cite this post" with text citation and BibTeX copy | bottom of any post |
 | Comments | utterances or giscus (GitHub sign-in), lazy-loaded, follows light/dark; off by default; `comments: false` per post | README › Comments; any demo post |
 | SEO | Canonical URLs, Open Graph + Twitter cards (image type matches the file), JSON-LD, sitemap, robots.txt | `layouts/Layout.astro` |
 | RSS | `/rss.xml`: full post HTML (absolute links, MathML, inline diagrams; no scripts), tags as categories, `dc:creator`, self link; drafts and scheduled posts excluded; autodiscovery `<link>` and header button | `routes/rss.xml.ts`, `utils/feedContent.ts` |
-| OG images | Drawn per post with Satori + sharp at build time and written as static PNGs (`/posts/<slug>/index.png`, site-wide `/og.png`); or `ogImage` in frontmatter; off with `features.dynamicOgImage: false` | `utils/ogImage.ts` |
 | Accessibility | Skip link, focus styles, labelled controls | `src/layouts/Layout.astro` |
 | Performance | ~2.8 KB gzipped JS per article; fonts with metric-matched fallbacks | — |
 

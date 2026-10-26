@@ -14,9 +14,6 @@ export default {
   post: {
     publishedAt: "发布于",
     updatedAt: "更新于",
-    sharePostIntro: "分享这篇文章：",
-    sharePostOn: "分享到 {{platform}}",
-    sharePostViaEmail: "通过邮件分享这篇文章",
     tagLabel: "标签",
     categoryLabel: "分类",
     minRead: "阅读约 {{minutes}} 分钟",
@@ -41,7 +38,7 @@ export default {
   footer: {
     copyright: "版权所有",
     allRightsReserved: "保留所有权利。",
-    credit: "基于",
+    credit: "源码",
   },
   citation: {
     title: "引用本文",
@@ -89,15 +86,6 @@ export default {
     limits: "时空限制",
     statement: "题目链接",
     tags: "题目标签",
-  },
-  share: {
-    quote: "分享选段",
-    copied: "已复制",
-    copyFailed: "复制失败",
-    rendering: "生成中……",
-    imageSaved: "图片已保存",
-    copyLink: "复制链接",
-    via: "分享到……",
   },
   a11y: {
     skipToContent: "跳到正文",

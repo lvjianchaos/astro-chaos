@@ -14,9 +14,6 @@ export default {
   post: {
     publishedAt: "Published at",
     updatedAt: "Updated",
-    sharePostIntro: "Share this post:",
-    sharePostOn: "Share this post on {{platform}}",
-    sharePostViaEmail: "Share this post via email",
     tagLabel: "Tags",
     categoryLabel: "Category",
     minRead: "{{minutes}} min read",
@@ -41,7 +38,7 @@ export default {
   footer: {
     copyright: "Copyright",
     allRightsReserved: "All rights reserved.",
-    credit: "Set in",
+    credit: "Source",
   },
   citation: {
     title: "Cite this post",
@@ -89,15 +86,6 @@ export default {
     limits: "Limits",
     statement: "Statement",
     tags: "Tags",
-  },
-  share: {
-    quote: "Share quote",
-    copied: "Copied",
-    copyFailed: "Copy failed",
-    rendering: "Rendering…",
-    imageSaved: "Image saved",
-    copyLink: "Copy link",
-    via: "Share via…",
   },
   a11y: {
     skipToContent: "Skip to content",

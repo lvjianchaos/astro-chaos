@@ -29,7 +29,10 @@ public/pagefind
 # pnpm
 .pnpm-store
 
-# local screenshots (apps/site/scripts/screenshot.mjs)
+# 项目记忆（本地笔记，不上传）
+.memory/
+
+# 本地截图（apps/site/scripts/screenshot.mjs 生成）
 apps/*/.screenshots/
 
 # docker compose

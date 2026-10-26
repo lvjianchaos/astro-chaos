@@ -12,7 +12,7 @@ packages/astro-sage/   主题源码（fork 自 chintak/astro-sage，保留上游
   src/content.ts       collections + frontmatter schema
   src/markdown/        Sätteri 插件（callout、KaTeX、链接/wiki-link、代码标签）
   src/routes/          注入的页面与端点
-  src/components/, layouts/, styles/, share/, diagrams/, comments/
+  src/components/, layouts/, styles/, diagrams/, comments/
   src/i18n/lang/       界面文案（en.ts / zh-CN.ts）
 apps/site/             本站内容与配置
   sage.config.ts       站点配置

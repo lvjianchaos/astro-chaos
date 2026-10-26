@@ -6,6 +6,7 @@ export default defineSageConfig({
     title: "IO",
     description: "算法题解、算法笔记与题目归档。",
     author: "lvjianchaos",
+    repo: "https://github.com/lvjianchaos/astro-chaos",
     lang: "zh-CN",
     timezone: "Asia/Shanghai",
   },
@@ -19,7 +20,6 @@ export default defineSageConfig({
   },
   features: {
     lightAndDarkMode: true,
-    dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
     editPost: {

@@ -18,7 +18,7 @@ export { BLOG_PATH };
 export function defineSageCollections({ author }: { author: string }) {
   const posts = defineCollection({
     loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
-    schema: ({ image }) =>
+    schema: () =>
       z.object({
         author: z.string().default(author),
         pubDatetime: z.date(),
@@ -55,7 +55,6 @@ export function defineSageCollections({ author }: { author: string }) {
             tags: z.array(z.string()).optional(),
           })
           .optional(),
-        ogImage: image().or(z.string()).optional(),
         description: z.string(),
         canonicalURL: z.string().optional(),
         hideEditPost: z.boolean().optional(),
@@ -76,7 +75,6 @@ export function defineSageCollections({ author }: { author: string }) {
     schema: z.object({
       title: z.string(),
       description: z.string().optional(),
-      ogImage: z.string().optional(),
       canonicalURL: z.string().optional(),
     }),
   });

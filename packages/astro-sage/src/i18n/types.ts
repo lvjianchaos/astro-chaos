@@ -12,9 +12,6 @@ export interface UIStrings {
   post: {
     publishedAt: string;
     updatedAt: string;
-    sharePostIntro: string;
-    sharePostOn: string;
-    sharePostViaEmail: string;
     tagLabel: string;
     categoryLabel: string;
     minRead: string;
@@ -83,15 +80,6 @@ export interface UIStrings {
     limits: string;
     statement: string;
     tags: string;
-  };
-  share: {
-    quote: string;
-    copied: string;
-    copyFailed: string;
-    rendering: string;
-    imageSaved: string;
-    copyLink: string;
-    via: string;
   };
   a11y: {
     skipToContent: string;
