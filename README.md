@@ -5,9 +5,11 @@
 - 站点：`https://io.chaos-ljc.top/`
 - 主站（Fuwari 主题）：`https://blog.chaos-ljc.top/`
 
-| 首页 | 文章页 | 分类页 |
-| --- | --- | --- |
-| ![首页](docs/screenshots/home-light.png) | ![文章页](docs/screenshots/post-light.png) | ![分类页](docs/screenshots/categories-light.png) |
+| 亮色 | 暗色 |
+| --- | --- |
+| ![首页](docs/screenshots/home-light.png) | ![首页](docs/screenshots/home-dark.png) |
+| ![文章页](docs/screenshots/post-light.png) | ![文章页](docs/screenshots/post-dark.png) |
+| ![分类页](docs/screenshots/categories-light.png) | |
 
 本站基于 [AstroSage](https://github.com/chintak/astro-sage) 开发。AstroSage 本身是
 [AstroPaper](https://github.com/satnaing/astro-paper) 的重构版，提供了衬线排版、固定目录、
@@ -134,8 +136,8 @@ flowchart LR
   AstroSage 本身由它重构而来。
 
 本仓库是中文本地化 + 算法特化的改造版本，**不是**上述项目的官方分支，也不回传上游。
-`docs/decisions/001`–`005` 是上游的设计决策记录，保留作为背景参考；
-`docs/decisions/006` 是本站的中文排版决策。
+本站自己的设计决策记录在 [`docs/decisions/`](docs/decisions/)；上游的决策记录（含我们改造
+前的西文排版基线）留在上游仓库，需要时去查。
 
 ## 许可
 

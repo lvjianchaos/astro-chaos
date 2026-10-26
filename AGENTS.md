@@ -19,7 +19,7 @@ apps/site/             本站内容与配置
   src/content/posts/   文章
   src/content/pages/   页面
   scripts/             开发脚本（screenshot.mjs）
-docs/decisions/        ADR：设计决策与理由
+docs/decisions/        ADR：本站的设计决策（目前只有中文排版一篇）
 ```
 
 ## 约定
