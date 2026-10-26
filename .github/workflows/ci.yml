@@ -1,0 +1,30 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Lint, type-check, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm format:check
+      # Mermaid and Excalidraw diagrams are rendered at build time in headless
+      # Chromium; the SVG is cached in .sage-cache/diagrams and committed, so a
+      # deploy build needs no browser.
+      - run: pnpm --filter @io/site exec playwright install --with-deps chromium
+      - run: pnpm build

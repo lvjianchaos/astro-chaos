@@ -1,0 +1,137 @@
+/*
+ * AstroSage design tokens. Every colour in the theme comes from here.
+ *
+ * The palette is a Chinese "paper and ink" set: 宣纸 (warm paper) for light,
+ * 墨 (ink) for dark, 朱砂 (cinnabar) as the accent and 黛青 (deep celadon) as
+ * the secondary. Every pair below is WCAG-checked:
+ *
+ *   light  fg 13.5:1 · muted/accent/sage ≥ 5.4:1 on bg, ≥ 4.9:1 on raised
+ *   dark   fg 13.8:1 · muted/accent/sage ≥ 6.6:1 on bg, ≥ 5.9:1 on raised
+ *
+ * Typography follows the Chinese reading convention rather than the Latin
+ * one: the measure is counted in 全角字 (full-width ideographs), not in
+ * average Latin characters. See --char below.
+ */
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-surface: var(--bg-raised);
+  --color-foreground: var(--fg);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-fg);
+  --color-sage: var(--sage);
+  --color-muted: var(--bg-raised);
+  --color-muted-foreground: var(--fg-muted);
+  --color-border: var(--border);
+  --font-app: var(--font-body);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+/*
+ * Typography and layout tokens. Families are split by role:
+ *
+ *   --font-body    reading text   Latin: Newsreader · CJK: 思源宋体
+ *   --font-heading headings       思源黑体 (a sans face keeps headings crisp)
+ *   --font-ui      chrome/labels  Latin: JetBrains Mono · CJK: 思源黑体
+ *   --font-code    code           Latin: JetBrains Mono · CJK: 思源黑体
+ *
+ * The CJK faces are self-hosted and split into ~100 unicode-range subsets
+ * (see src/styles/fonts.css), so a reader downloads only the slices a page
+ * actually uses.
+ */
+:root {
+  /*
+   * --font-serif and --font-mono are owned by the Astro Fonts API (they are
+   * defined in the stylesheet it injects); the CJK families are appended to
+   * those stacks through typography.fallbacks, so Latin and Han glyphs fall
+   * back independently. Only the sans face is defined here.
+   */
+  --font-sans: "Noto Sans SC Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --font-body: var(--font-serif), serif;
+  --font-heading: var(--font-sans), var(--font-serif), sans-serif;
+  --font-ui: var(--font-mono), var(--font-sans), ui-sans-serif, sans-serif;
+  --font-code: var(--font-mono), var(--font-sans), ui-monospace, monospace;
+
+  /* Chinese body text: 17px reads like 18.5px in a Latin serif. */
+  --text-body: 1.0625rem; /* 17px */
+  --leading-body: 1.8; /* Chinese needs more air than Latin's 1.7 */
+  --body-tracking: 0.01em; /* keeps dense Han glyphs from closing up */
+  --heading-weight: 600;
+  --heading-tracking: -0.005em; /* Chinese headings take almost no tracking */
+  --heading-scale: 1.25; /* minor third */
+  --ui-size: 0.78rem;
+  --label-tracking: 0.04em;
+
+  /*
+   * Reading column, counted in 全角字 rather than Latin characters.
+   *
+   * A Han glyph is a full em square, so --char is the body size itself
+   * (times 0.86 to account for the Latin words mixed into Chinese prose).
+   * 36–40 全角字 per line is the comfortable range for Chinese reading;
+   * the Latin equivalent (66–71 characters) is ~1.8× wider and tiring.
+   */
+  --char: calc(var(--text-body) * 0.86);
+  --measure-min: calc(var(--char) * 36);
+  --measure-max: calc(var(--char) * 40);
+  --measure: clamp(var(--measure-min), 46vw, var(--measure-max));
+  --rail: 15rem;
+  --rail-gap: clamp(2.5rem, 4vw, 3.5rem);
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --page-max: calc(var(--measure) + var(--rail-gap) + var(--rail));
+
+  /* Paragraph indent (中文首行缩进). 0 = paragraphs separated by space. */
+  --paragraph-indent: 0;
+}
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f3ea;
+  --bg-raised: #efe8db;
+  --fg: #2b2620;
+  --fg-muted: #6b6153;
+  --accent: #a8432a;
+  --accent-fg: #fffaf0;
+  --sage: #3f6b5f;
+  --border: #e2d9c6;
+  --selection: #f0d7a8;
+  --mark: #f4dea2;
+
+  --diff-ins: #35682c;
+  --diff-del: #b03a24;
+  --diff-ins-tint: 13%;
+  --diff-del-tint: 11%;
+
+  --callout-note: #3a5f7d;
+  --callout-tip: #3f6b5f;
+  --callout-important: #6f4a86;
+  --callout-warning: #7d5a0e;
+  --callout-caution: #a83a22;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1b1917;
+  --bg-raised: #262320;
+  --fg: #ece3d4;
+  --fg-muted: #b3a795;
+  --accent: #e08a63;
+  --accent-fg: #1b1917;
+  --sage: #9dbfae;
+  --border: #38332c;
+  --selection: #5c4630;
+  --mark: #5e4a22;
+
+  --diff-ins: #8fcf74;
+  --diff-del: #f2836f;
+  --diff-ins-tint: 9%;
+  --diff-del-tint: 10%;
+
+  --callout-note: #8fb6d4;
+  --callout-tip: #9dbfae;
+  --callout-important: #c3a6d6;
+  --callout-warning: #dcb25e;
+  --callout-caution: #e8907e;
+}

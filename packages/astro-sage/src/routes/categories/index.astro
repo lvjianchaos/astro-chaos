@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@sage/layouts/Layout.astro";
+import Header from "@sage/components/Header.astro";
+import Main from "@sage/components/Main.astro";
+import Footer from "@sage/components/Footer.astro";
+import CategoryBadge from "@sage/components/CategoryBadge.astro";
+import { getUniqueCategories } from "@sage/utils/getUniqueCategories";
+import { useTranslations } from "@sage/i18n";
+import config from "@sage/config";
+
+const posts = await getCollection("posts", ({ data }) => !data.draft);
+const categories = getUniqueCategories(posts);
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+---
+
+<Layout title={`${t.pages.categoriesTitle} | ${config.site.title}`}>
+  <Header />
+
+  <Main pageTitle={t.pages.categoriesTitle} pageDesc={t.pages.categoriesDesc}>
+    <ul class="category-list">
+      {categories.map(({ categoryName, count }) => (
+        <li class="category-item">
+          <CategoryBadge name={categoryName} />
+          <span class="category-count">{count}</span>
+        </li>
+      ))}
+    </ul>
+  </Main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+  }
+  .category-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .category-count {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+</style>
