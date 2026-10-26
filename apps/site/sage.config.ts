@@ -30,6 +30,6 @@ export default defineSageConfig({
   },
   socials: [
     { name: "github", url: "https://github.com/lvjianchaos" },
-    { name: "mail", url: "mailto:lvjianchaos@chaos-ljc.top" },
+    { name: "mail", url: "mailto:2277146577@qq.com" },
   ],
 });
