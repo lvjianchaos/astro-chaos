@@ -12,6 +12,8 @@
     "preview": "pnpm --filter @io/site preview",
     "check": "pnpm --filter @io/site exec astro check",
     "lint": "oxlint",
+    "clean": "node scripts/clean.mjs",
+    "memory:check": "node scripts/memory-check.mjs",
     "format": "prettier --write \"packages/**/*.{ts,astro,css}\" \"apps/site/**/*.ts\"",
     "format:check": "prettier --check \"packages/**/*.{ts,astro,css}\" \"apps/site/**/*.ts\"",
     "test": "pnpm --filter astro-sage test"

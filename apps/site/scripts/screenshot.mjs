@@ -3,16 +3,22 @@
  *
  * Usage: node scripts/screenshot.mjs [baseUrl]
  * Serves apps/site/dist over a throwaway static server, captures the home
- * page and every post in both themes, and writes PNGs to .screenshots/.
+ * page and every post in both themes, and writes PNGs to
+ * <repo>/.cache/screenshots/ (a disposable cache: the directory is wiped
+ * before each run so it never grows beyond the latest run).
  */
 import { createServer } from "node:http";
-import { readFile, mkdir, readdir } from "node:fs/promises";
+import { readFile, mkdir, readdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { extname, join, resolve } from "node:path";
+import { extname, join, resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
-const dist = resolve(process.cwd(), "dist");
-const outDir = resolve(process.cwd(), ".screenshots");
+const here = dirname(fileURLToPath(import.meta.url));
+const siteRoot = resolve(here, "..");
+const repoRoot = resolve(siteRoot, "../..");
+const dist = join(siteRoot, "dist");
+const outDir = join(repoRoot, ".cache", "screenshots");
 const baseUrl = process.argv[2] ?? "http://127.0.0.1:4173";
 
 const MIME = {
@@ -79,6 +85,9 @@ async function launchBrowser() {
 }
 
 const server = await serve();
+// Disposable cache: wipe before writing so the directory only ever holds
+// the latest run instead of growing with every invocation.
+await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
 
 const browser = await launchBrowser();

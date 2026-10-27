@@ -38,8 +38,8 @@ CLAUDE.md
 FEATURES.md
 docs/decisions/
 
-# 本地截图（apps/site/scripts/screenshot.mjs 生成）
-apps/*/.screenshots/
+# 本地可再生产物（截图、临时缓存）：pnpm clean 可一键清空
+.cache/
 
 # docker compose
 compose.override.yaml

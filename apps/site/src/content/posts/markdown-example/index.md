@@ -2,7 +2,8 @@
 title: "Markdown 示例：本站支持的写法都在这里"
 description: "一篇示例文章，覆盖标题、列表、表格、代码、公式、图表、提示块、脚注、Wiki 链接等全部写法，可当作写作手册使用。"
 pubDatetime: 2026-10-26T10:00:00+08:00
-tags: [Markdown, 写作指南]
+series: 博客指南
+tags: [Markdown, 样例]
 featured: true
 ---
 

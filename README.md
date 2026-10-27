@@ -8,8 +8,7 @@
 | 亮色 | 暗色 |
 | --- | --- |
 | ![首页](docs/screenshots/home-light.png) | ![首页](docs/screenshots/home-dark.png) |
-| ![文章页](docs/screenshots/post-light.png) | ![文章页](docs/screenshots/post-dark.png) |
-| ![分类页](docs/screenshots/categories-light.png) | |
+|  | ![文章页](docs/screenshots/post-dark.png) |
 
 本站基于 [AstroSage](https://github.com/chintak/astro-sage) 开发。AstroSage 本身是
 [AstroPaper](https://github.com/satnaing/astro-paper) 的重构版，提供了衬线排版、固定目录、
@@ -71,6 +70,9 @@ pnpm --filter @io/site exec node scripts/screenshot.mjs   # 截图（light/dark�
 pnpm --filter @io/site test:search                         # 中文搜索烟测
 pnpm --filter @io/site prune:fonts                        # 裁掉没用到的字体分片（build 已自动执行）
 ```
+
+截图输出到仓库根的 `.cache/screenshots/`（不入库），脚本每次运行会先清空自己的输出目录，
+所以不会越跑越多。`pnpm clean` 可以把 `.cache/`、`dist/` 这类可再生产物一并清掉。
 
 ---
 
