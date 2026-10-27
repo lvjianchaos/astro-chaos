@@ -78,6 +78,12 @@ export default {
     filters: "筛选",
     searching: "正在搜索 {{term}}……",
   },
+  code: {
+    copy: "复制到剪贴板",
+    copied: "已复制",
+    terminal: "终端窗口",
+    collapsedLines: "{lineCount} 行已折叠",
+  },
   diagram: {
     open: "在查看器中打开 {{label}}",
     zoom: "缩放（或双击）",

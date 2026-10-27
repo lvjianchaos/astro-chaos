@@ -18,6 +18,8 @@ import { satteri } from "@astrojs/markdown-satteri";
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { pluginCollapsibleSectionsTexts } from "@expressive-code/plugin-collapsible-sections";
+import { pluginFramesTexts } from "@expressive-code/plugin-frames";
 import { pluginLanguageLabel } from "./markdown/code-language";
 import tailwindcss from "@tailwindcss/vite";
 import {
@@ -243,6 +245,20 @@ function invalidateStaleContentCache(
 export default function astroSage(config: SageConfig): AstroIntegration {
   const face: SerifFace = config.typography?.serif ?? "newsreader";
   const virtualId = "virtual:astro-sage/user-config";
+  const locale = config.site.lang ?? "en";
+  const ui = staticTranslations(locale);
+
+  // Expressive Code ships English UI strings; register ours for the locale.
+  if (locale.toLowerCase().startsWith("zh")) {
+    pluginFramesTexts.addLocale("zh-CN", {
+      terminalWindowFallbackTitle: ui.code.terminal,
+      copyButtonTooltip: ui.code.copy,
+      copyButtonCopied: ui.code.copied,
+    });
+    pluginCollapsibleSectionsTexts.addLocale("zh-CN", {
+      collapsedLines: ui.code.collapsedLines,
+    });
+  }
 
   return {
     name: "astro-sage",
@@ -346,6 +362,9 @@ export default function astroSage(config: SageConfig): AstroIntegration {
                 : theme =>
                     `[data-theme="${theme.type === "dark" ? "dark" : "light"}"]`,
               useDarkModeMediaQuery: false,
+              // Expressive Code's own UI (copy button, collapsed sections)
+              // follows the site's language.
+              defaultLocale: locale,
               plugins: [
                 pluginLineNumbers(),
                 pluginCollapsibleSections(),

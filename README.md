@@ -24,6 +24,9 @@ KaTeX、Expressive Code、Mermaid/Excalidraw 构建期渲染、系列（Series�
 
 这份 README 同时是主题的参考手册：配置项、frontmatter、写作语法、路由都在下面。
 
+想看实际效果，可以看站内的 [《Markdown 示例》](https://io.chaos-ljc.top/posts/markdown-example/)——
+它把下面列出的每一种写法都演示了一遍。
+
 ---
 
 ## 目录结构
@@ -112,32 +115,30 @@ tags: [洛谷, P1002, 动态规划, 路径计数]
 ```cpp title="P1002.cpp"
 int main() {}
 ```
-```
-
 ### 正文语法
 
-| 功能 | 写法 |
-| --- | --- |
-| 数学 | `$…$` 行内、`$$…$$` 独立（KaTeX，构建期渲染，无 JS） |
-| 代码 | 围栏代码块；meta 支持 `title="x.cpp"`、`{1-2}` 高亮行、`ins={4}` / `del={3}` 增删标记、`collapse={1-4}` 折叠、`showLineNumbers`；`bash`/`sh` 自动加终端外框；语言标签显示在边框上 |
-| 图表 | ` ```mermaid ` 或 ` ```excalidraw `（JSON）；Excalidraw 也支持 `![说明](./x.excalidraw)` 或 excalidraw.com 分享链接 |
-| 宽图 | 围栏后加 `wide` / `full`，或图片标题写 `![alt](./x.jpg "wide")`；MDX 里可用 `<Figure src alt caption size="column\|wide\|full" />` |
-| 提示块 | `> [!NOTE]`（NOTE / TIP / IMPORTANT / WARNING / CAUTION）或 `:::warning[标题]` … `:::`；不写标题时自动用中文（注意 / 提示 / 重要 / 警告 / 危险） |
-| 引用 | `>`，可嵌套 |
-| 列表 | `-` / `1.`；任务列表 `- [x]` 渲染成圆形勾选框 |
-| 表格 | GFM；宽表可横向滚动 |
-| 脚注 | `[^1]` |
+| 功能      | 写法                                                         |
+| --------- | ------------------------------------------------------------ |
+| 数学      | `$…$` 行内、`$$…$$` 独立（KaTeX，构建期渲染，无 JS）         |
+| 代码      | 围栏代码块；meta 支持 `title="x.cpp"`、`{1-2}` 高亮行、`ins={4}` / `del={3}` 增删标记、`collapse={1-4}` 折叠、`showLineNumbers`；`bash`/`sh` 自动加终端外框；语言标签显示在边框上 |
+| 图表      | ` ```mermaid ` 或 ` ```excalidraw `（JSON）；Excalidraw 也支持 `![说明](./x.excalidraw)` 或 excalidraw.com 分享链接 |
+| 宽图      | 围栏后加 `wide` / `full`，或图片标题写 `![alt](./x.jpg "wide")`；MDX 里可用 `<Figure src alt caption size="column\|wide\|full" />` |
+| 提示块    | `> [!NOTE]`（NOTE / TIP / IMPORTANT / WARNING / CAUTION）或 `:::warning[标题]` … `:::`；不写标题时自动用中文（注意 / 提示 / 重要 / 警告 / 危险） |
+| 引用      | `>`，可嵌套                                                  |
+| 列表      | `-` / `1.`；任务列表 `- [x]` 渲染成圆形勾选框                |
+| 表格      | GFM；宽表可横向滚动                                          |
+| 脚注      | `[^1]`                                                       |
 | Wiki 链接 | `[[slug]]`、`[[slug\|文本]]`、`[[slug#小节]]`、`[[#小节]]`；按 slug、路径或标题匹配 |
-| 行内元素 | `**粗体**`、`<mark>`、`<kbd>`、`H~2~O`、`x^2^`、`<abbr title>`；引号与破折号自动转排版符号 |
-| 外链 | 自动加 ↗ 角标与 `rel="noopener"`；站内链接保持普通下划线 |
+| 行内元素  | `**粗体**`、`<mark>`、`<kbd>`、`H~2~O`、`x^2^`、`<abbr title>`；引号与破折号自动转排版符号 |
+| 外链      | 自动加 ↗ 角标与 `rel="noopener"`；站内链接保持普通下划线     |
 
 ### 分类模型的分工
 
-| 维度 | 字段 | 基数 | 例子 | 作用 |
-| --- | --- | --- | --- | --- |
-| 分类 | `category` | 单选 | 题解 / 题目 / 算法 | 文章类型，主导航 |
-| 标签 | `tags` | 多选 | 洛谷 / P1002 / 动态规划 / C++17 | 横切特征，聚合检索 |
-| 系列 | `series` | 有序多篇 | 动态规划入门 | 学习路径，"第 N 篇，共 M 篇" |
+| 维度 | 字段       | 基数     | 例子                            | 作用                         |
+| ---- | ---------- | -------- | ------------------------------- | ---------------------------- |
+| 分类 | `category` | 单选     | 题解 / 题目 / 算法              | 文章类型，主导航             |
+| 标签 | `tags`     | 多选     | 洛谷 / P1002 / 动态规划 / C++17 | 横切特征，聚合检索           |
+| 系列 | `series`   | 有序多篇 | 动态规划入门                    | 学习路径，"第 N 篇，共 M 篇" |
 
 分类回答"这是哪类文章"，标签回答"它有什么特征"，系列回答"按什么顺序读"。
 
@@ -147,27 +148,27 @@ int main() {}
 
 `apps/site/sage.config.ts`：
 
-| 键 | 默认值 | 说明 |
-| --- | --- | --- |
-| `site.url` | 必填 | 站点正式地址（写进 canonical、RSS、sitemap） |
-| `site.title` / `description` / `author` | 必填 | 标题 / 描述 / 作者 |
-| `site.profile` | — | 作者主页（用于结构化数据） |
-| `site.repo` | — | 源码仓库地址（显示在页脚） |
-| `site.lang` / `timezone` / `dir` | `"en"` / `"UTC"` / `"ltr"` | 语言、时区、书写方向 |
-| `site.googleVerification` | 环境变量 | Google Search Console 验证码 |
-| `typography.serif` | `"newsreader"` | 西文正文衬线体，另可选 `source-serif-4`、`literata` |
-| `typography.opticalSizing` | `false` | 额外打包 opsz 轴（每个字重约多 70KB） |
-| `typography.fallbacks` | 系统字体栈 | Web 字体加载失败时的回退 |
-| `home.title` / `home.intro` | `site.title` / — | 首页标题与引言 |
-| `posts.perPage` / `perIndex` | `4` / `4` | 列表页与首页每页条数 |
-| `posts.scheduledPostMargin` | 15 分钟 | 定时发布提前量 |
-| `features.lightAndDarkMode` | `true` | 亮/暗主题切换 |
-| `features.showArchives` | `true` | `/archives` 与导航入口 |
-| `features.showBackButton` | `true` | 文章页返回按钮 |
-| `features.editPost` | `{ enabled: false }` | `{ enabled: true, url }` 显示"编辑此页" |
-| `features.search` | `"pagefind"` | 设为 `false` 关闭搜索 |
-| `socials` | `[]` | 站点社交图标，`name` 取 `src/assets/icons/socials/` 里的文件名 |
-| `typography.paragraphIndent` | `false` | 首行缩进 2 个字符（中文排版习惯） |
+| 键                                      | 默认值                     | 说明                                                         |
+| --------------------------------------- | -------------------------- | ------------------------------------------------------------ |
+| `site.url`                              | 必填                       | 站点正式地址（写进 canonical、RSS、sitemap）                 |
+| `site.title` / `description` / `author` | 必填                       | 标题 / 描述 / 作者                                           |
+| `site.profile`                          | —                          | 作者主页（用于结构化数据）                                   |
+| `site.repo`                             | —                          | 源码仓库地址（显示在页脚）                                   |
+| `site.lang` / `timezone` / `dir`        | `"en"` / `"UTC"` / `"ltr"` | 语言、时区、书写方向                                         |
+| `site.googleVerification`               | 环境变量                   | Google Search Console 验证码                                 |
+| `typography.serif`                      | `"newsreader"`             | 西文正文衬线体，另可选 `source-serif-4`、`literata`          |
+| `typography.opticalSizing`              | `false`                    | 额外打包 opsz 轴（每个字重约多 70KB）                        |
+| `typography.fallbacks`                  | 系统字体栈                 | Web 字体加载失败时的回退                                     |
+| `home.title` / `home.intro`             | `site.title` / —           | 首页标题与引言                                               |
+| `posts.perPage` / `perIndex`            | `4` / `4`                  | 列表页与首页每页条数                                         |
+| `posts.scheduledPostMargin`             | 15 分钟                    | 定时发布提前量                                               |
+| `features.lightAndDarkMode`             | `true`                     | 亮/暗主题切换                                                |
+| `features.showArchives`                 | `true`                     | `/archives` 与导航入口                                       |
+| `features.showBackButton`               | `true`                     | 文章页返回按钮                                               |
+| `features.editPost`                     | `{ enabled: false }`       | `{ enabled: true, url }` 显示"编辑此页"                      |
+| `features.search`                       | `"pagefind"`               | 设为 `false` 关闭搜索                                        |
+| `socials`                               | `[]`                       | 站点社交图标，`name` 取 `src/assets/icons/socials/` 里的文件名 |
+| `typography.paragraphIndent`            | `false`                    | 首行缩进 2 个字符（中文排版习惯）                            |
 
 社交图标可选：bluesky、facebook、github、hackernews、linkedin、mail、pinterest、reddit、
 telegram、whatsapp、x。
@@ -182,7 +183,7 @@ telegram、whatsapp、x。
 ## 读者侧的能力
 
 - **固定目录**：≥1280px 时固定在右侧并高亮当前小节，窄屏折叠成"本页目录"块
-- **阅读时长**：汉字按 ~400 字/分、拉丁词按 ~230 词/分估算，中文不会被算成"1 分钟"
+- **阅读时长**：汉字按 ~400 字/分、拉丁词按 ~230 词/分估算
 - **自适应栏宽**：中文按全角字（36–40 字/行）、纯西文按字符（66–71 字符/行）自动切换
 - **中文界面**：搜索框、图表查看器、提示块等全部随语言切换
 - **搜索**：Pagefind，中文按 `charabia` 分词，`/search`
@@ -212,11 +213,11 @@ telegram、whatsapp、x。
 产物是纯静态文件，`apps/site/dist/` 可以放到任意静态托管。仓库按 [Vercel](https://vercel.com)
 配置（Astro 静态站零配置）：
 
-| 项 | 值 |
-| --- | --- |
-| Build Command | `pnpm --filter @io/site build` |
-| Output Directory | `apps/site/dist` |
-| Install Command | `pnpm install` |
+| 项               | 值                             |
+| ---------------- | ------------------------------ |
+| Build Command    | `pnpm --filter @io/site build` |
+| Output Directory | `apps/site/dist`               |
+| Install Command  | `pnpm install`                 |
 
 框架预设选 **Astro** 即可；域名在 Vercel 项目设置里绑定后，记得同步更新
 `apps/site/sage.config.ts` 里的 `site.url`（它会写进 canonical 链接、RSS 与 sitemap）。

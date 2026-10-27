@@ -31,6 +31,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@excalidraw/utils": "^0.1.5",
     "@expressive-code/plugin-collapsible-sections": "^0.44.2",
+    "@expressive-code/plugin-frames": "^0.44.2",
     "@expressive-code/plugin-line-numbers": "^0.44.2",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/literata": "^5.2.8",

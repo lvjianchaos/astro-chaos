@@ -78,6 +78,12 @@ export default {
     filters: "Filters",
     searching: "Searching for [SEARCH_TERM]...",
   },
+  code: {
+    copy: "Copy to clipboard",
+    copied: "Copied!",
+    terminal: "Terminal window",
+    collapsedLines: "{lineCount} collapsed {lineCount;1=line;lines}",
+  },
   diagram: {
     open: "Open {{label}} in the viewer",
     zoom: "Zoom (or double-click)",

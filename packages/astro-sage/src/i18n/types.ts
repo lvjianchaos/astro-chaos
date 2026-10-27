@@ -70,6 +70,13 @@ export interface UIStrings {
     filters: string;
     searching: string;
   };
+  /** Expressive Code's own UI (copy button, collapsed sections). */
+  code: {
+    copy: string;
+    copied: string;
+    terminal: string;
+    collapsedLines: string;
+  };
   /** The diagram viewer and its expand button. */
   diagram: {
     open: string;
