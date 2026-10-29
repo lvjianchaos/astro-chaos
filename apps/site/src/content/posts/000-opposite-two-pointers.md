@@ -144,15 +144,44 @@ public:
 
 > [11. 盛最多水的容器](https://leetcode.cn/problems/container-with-most-water/) 
 
-给定一整型数组，表示高度。
-
-![盛水最多的容器](https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/07/25/question_11.jpg)
-
 ### 题意
+
+给定一整型数组，要求你找出两个线作为高度、下标差为底看作盛水的容器，使得盛水量最大。
+
+![盛水最多的容器](https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/io/post/000-opposite-two-pointers/container-with-most-water.webp)
 
 ### 思路
 
+直观的，容器的高度取决于更短的那条线，容器的宽度取决于两条线的距离，即下标差，盛水量即面积。我们先随意选择两条线，可参考图。对于短的那条线，如果中间（两条线之间）的线和它构成容器：
+
+1. 中间的线比它长或恰好相等，那么高度依旧由更短的那条线决定，所以高度不变，但宽度（下标差）变小，盛水量减少；
+2. 中间的线比它短，高度由更短的那条即中间的那条控制，所以高度减少，宽度减少，盛水量减少；
+
+也就是说，中间任何线无法和短线构成更大的容器了，即：要想构成更大的容器肯定不会包含这条线，所以这条线可以直接去掉，在剩下的线中继续寻找。
+
+**相向双指针**，初始化两个指针 $left=0$ 和 $right=n-1$ ，分别指向最左和最右，哪条线短就移动哪条，若一样长移动哪条都可以。但在移动前，我们要计算这两条线的“盛水量”，若比答案大则更新答案。
+
+我们每次 $O(1)$ 的时间去掉 $1$ 条线，时间复杂度 $O(n)$。
+
 ### 代码
+
+```c++ {11}
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        // 初始化答案，与左右指针
+        int ans = 0;
+        int l = 0, r = height.size() - 1;
+        while (l < r) {
+            ans = max(ans, (r - l) * min(height[l], height[r]));
+            // 若左边更短，则说明 height[l] 与右边任意垂线无法组成比 ans 更大的
+            // 若右边更短，则说明 height[r] 与左边任意垂线无法组成比 ans 更大的
+            height[l] < height[r] ? l ++ : r --;
+        }
+        return ans;
+    }
+};
+```
 
 ## 接雨水
 
@@ -160,6 +189,64 @@ public:
 
 ###  题意
 
+给定非负整型数组，表示高度，即图中黑色区块，那么可能形成洼地，问能接多少雨水。
+
+![接雨水](https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/io/post/000-opposite-two-pointers/trapping-rain-water.webp)
+
 ### 思路
 
+假设每个位置都是一个宽度为 $1$ 的桶，那么就需要计算左边这块木板以及右边这块的高度，取最小值。左边木板高度取决于左边最大高度，高于这个最大高度的水会从左边流出去，而低于不会；同理，右边木板高度取决于右边的最大高度。
+
+做法有两种：
+
+1. 需要用到 $2$ 个额外数组。第一个数组存储从左到第 $i$ 个位置（前缀）的最大高度，即前缀的最大值；第二个数组存储从右到第 $i$ 个位置（后缀）的最大高度，及后缀的最大值。算出前缀最大值数组、后缀最大值数组，我们就可以计算每个桶所接雨水量—— $min(pre\_max[i], suf\_max[i]) - height[i]$ ，遍历求和从而得到答案。时空复杂度都是 $O(n)$。
+
+2. 做法一时间复杂度已然最优，那么空间复杂度能否优化呢？假设我们只算了部分的前缀最大值和后缀最大值，我们能知道左边桶左侧木板的高度，以及右侧木板至少的高度，右边桶同理。
+
+   若前缀最大值小于后缀最大值，则我们知道左边桶的高度（$min(pre\_max, \ge suf\_max) = pre\_max$）为前缀最大值，继续向右扩展前缀最大值；若后缀最大值小于前缀最大值，则我们知道右边桶的高度 $suf\_max$ 为后缀最大值，继续向左扩展后缀最大值；若相等，移动哪边都可以。
+
+   具体如何实现呢？同上题，设两个指针 $L = 0, R = n-1$ 分别指向最左边和最右边，按照上述过程模拟即可。每次移动指针花费 $O(1)$ 时间，左右指针距离之和 $n$ ，时间复杂度 $O(n)$，这样只用到两个变量存储前缀最大值和后缀最大值，而不需要创建额外数组，空间复杂度 $O(1)$ 。
+
 ### 代码
+
+```c++ title="做法一.cpp" {9-11}
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int ans = 0;
+        int n = height.size();
+        int pre_max[n], suf_max[n];
+        pre_max[0] = height[0];
+        suf_max[n-1] = height[n-1];
+        for(int i = 1;i < n;i ++) pre_max[i] = max(height[i],pre_max[i-1]);
+        for(int i = n-2;i >= 0;i --) suf_max[i] = max(height[i],suf_max[i+1]);
+        for(int i = 0;i < n;i ++) ans += min(pre_max[i],suf_max[i]) - height[i];
+        return ans;
+    }
+};
+```
+
+```c++ title="做法二.cpp" {9-17}
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int ans = 0;
+        int l = 0, r = height.size() - 1;
+        int pre_max = 0, suf_max = 0;
+        // 这里 <= 或 < 均可，因为l, r 最终相遇的位置为最高点，该桶无雨水
+        while(l <= r) {
+            pre_max = max(pre_max,height[l]);
+            suf_max = max(suf_max,height[r]);
+            if(pre_max < suf_max) { // 可确定左侧接水量
+                ans += pre_max - height[l];
+                l++;
+            } else { // 可确定右侧接水量
+                ans += suf_max - height[r]; 
+                r--;
+            }
+        }
+        return ans;
+    }
+};
+```
+
