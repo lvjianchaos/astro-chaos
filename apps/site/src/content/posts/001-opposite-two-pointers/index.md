@@ -2,7 +2,6 @@
 title: "灵神算法基础|相向双指针"
 description: "两个指针`left=0``right=n-1`，从数组的两端开始，向中间移动。"
 pubDatetime: 2026-10-28T10:30:00+08:00
-category: 题解
 series: 灵神|基础算法精讲
 tags: [来源:leetcode, lt:中等, 相向双指针, 前后缀分解]
 ---
