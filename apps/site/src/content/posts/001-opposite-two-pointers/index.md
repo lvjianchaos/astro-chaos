@@ -147,7 +147,7 @@ public:
 
 给定一整型数组，要求你找出两个线作为高度、下标差为底看作盛水的容器，使得盛水量最大。
 
-![盛水最多的容器](https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/io/post/000-opposite-two-pointers/container-with-most-water.webp)
+![盛水最多的容器](https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/io/post/001-opposite-two-pointers/container-with-most-water.webp)
 
 ### 思路
 
@@ -190,7 +190,7 @@ public:
 
 给定非负整型数组，表示高度，即图中黑色区块，那么可能形成洼地，问能接多少雨水。
 
-![接雨水](https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/io/post/000-opposite-two-pointers/trapping-rain-water.webp)
+![接雨水](https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/io/post/001-opposite-two-pointers/trapping-rain-water.webp)
 
 ### 思路
 
