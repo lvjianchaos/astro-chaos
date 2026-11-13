@@ -4,7 +4,7 @@ export default defineSageConfig({
   site: {
     url: "https://io.chaos-ljc.top/",
     title: "CHAOS·IO",
-    description: "算法题解、算法笔记与题目归档。",
+    description: "从输入到输出，我的学习",
     author: "chaos",
     repo: "https://github.com/lvjianchaos/astro-chaos",
     lang: "zh-CN",
@@ -12,7 +12,7 @@ export default defineSageConfig({
   },
   home: {
     title: "CHAOS·IO",
-    intro: "这里记录算法题解、算法笔记，以及一些值得留存的题目。",
+    intro: "这里主要记录算法题目、题解、笔记，以及一些杂项",
   },
   posts: {
     perPage: 10,
