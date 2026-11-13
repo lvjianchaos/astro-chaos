@@ -3,6 +3,7 @@ title: "灵神算法基础|二分查找"
 description: "三种写法，四种情况。"
 pubDatetime: 2026-10-30T10:30:00+08:00
 series: 灵神|基础算法精讲
+category: 题解
 tags: [来源:leetcode, lt:中等, 二分查找, 红蓝染色法]
 ---
 
