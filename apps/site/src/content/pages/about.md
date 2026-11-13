@@ -3,7 +3,7 @@ title: "关于"
 description: "这个站点是什么，以及它和主站的关系。"
 ---
 
-这里是 [CHAOS主站](https://blog.chaos-ljc.top) 的**分站** $Chaos·IO$：目前主要记录算法题目、题解、笔记，以及一些杂项。
+这里是 [CHAOS主站](https://blog.chaos-ljc.top) 的**分站** Chaos·IO：目前主要记录算法题目、题解、笔记，以及一些杂项。
 
 ## 站点的分类方式
 
