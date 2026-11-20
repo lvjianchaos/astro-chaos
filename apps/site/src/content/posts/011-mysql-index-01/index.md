@@ -1,6 +1,6 @@
 ---
 title: "MySQL|索引01"
-description: "总结自小林coding图解系列等"
+description: "InnoDB如何存储数据，B+Tree如何查询，为什么采用V+Tree做索引。总结自小林coding图解系列等"
 pubDatetime: 2026-11-16T10:00:00+08:00
 series: 小林MySQL
 tags: [mysql, 索引, 八股, B+Tree]

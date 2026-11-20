@@ -1,6 +1,6 @@
 ---
 title: "MySQL|基础"
-description: "总结自小林coding图解系列等"
+description: "Select流程、记录存储。总结自小林coding图解系列等"
 pubDatetime: 2026-10-20T10:00:00+08:00
 series: 小林MySQL
 tags: [mysql, select执行流程, 数据存储]

@@ -1,6 +1,6 @@
 ---
 title: "MySQL|索引00"
-description: "总结自小林coding图解系列等"
+description: "索引常见面试题。总结自小林coding图解系列等"
 pubDatetime: 2026-11-15T10:00:00+08:00
 series: 小林MySQL
 tags: [mysql, 索引, 八股]
