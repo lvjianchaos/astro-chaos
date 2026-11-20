@@ -2,13 +2,9 @@
 title: "LeetCode-Hot100-day1"
 description: "day1-dp"
 pubDatetime: 2026-11-17T10:00:00+08:00
-category: 题解
+series: hot100速刷 
 tags: [动态规划, 01背包, 完全背包]
 ---
-
-
-
-
 
 
 
@@ -320,7 +316,7 @@ public:
 };
 ```
 
-### 300. 最长递增子序列
+### 300. 最长递增子序列 🌟
 
 如题，定义 $dp[i]$ 为以 i-th 为结尾的子序列最长长度，那么对于 $0 \le j<i,nums[j]<nums[i]$，$dp[i] = max(dp[i],dp[j] + 1)$。
 
@@ -347,9 +343,12 @@ public:
 
 对于外层的循环线性遍历计算dp无法优化，所以可优化的点在于内层线性寻找 dp[j]
 
-### 1143. 最长公共子序列
+### 1143. 最长公共子序列 🌟
 
+LCS；$dp[i][j]$代表text1的前i个字符和text2的前j个字符形成的最长公共子序列长度。
 
+- `text1[i-1]==text2[j-1]` : $dp[i][j]=dp[i−1][j−1]+1$。代表**必然使用 text1[i-1] 与 text2[j-1] 时** LCS 的长度。
+- `text1[i-1]!=text2[j-1]` : $dp[i][j]=max(dp[i−1][j],dp[i][j−1])$。代表**必然不使用 text1[i-1]（但可能使用text2[j-1]）时** 和 **必然不使用 text2[j-1]（但可能使用text1[i-1]）时** LCS 的长度。
 
 ```cpp
 class Solution {
@@ -370,5 +369,134 @@ public:
         return dp[n][m];
     }
 };
+```
+
+### 72. 编辑距离 🌟
+
+给你两个单词 `word1` 和 `word2`， 返回将 `word1` 转换成 `word2` 所使用的最少操作数 。
+
+可以对一个单词进行如下三种操作：
+
+- 插入一个字符
+- 删除一个字符
+- 替换一个字符
+
+类似 LCS；定义 $dp[i][j]$ 表示word1 前 i 个字符转换为 word2 前 j 个字符最少的操作次数。
+
+对于 word[i-1] == word[j-1]，$dp[i][j]=dp[i-1][j-1]$
+
+对于 !=，$dp[i][j] = min(dp[i-1]dp[j-1],dp[i-1][j],dp[i][j-1])+1$，按顺序分别表示替换、删除和插入操作。
+
+```cpp
+
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int n = word1.length();
+        int m = word2.length();
+        
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+
+        for(int j = 0;j <= m;j ++) dp[0][j] = j;
+        for(int i = 0;i <= n;i ++) dp[i][0] = i;
+
+        for(int i = 1;i <= n;i ++) {
+            for(int j = 1;j <= m;j ++) {
+                if(word1[i-1] == word2[j-1]) dp[i][j] = dp[i-1][j-1];
+                else {
+                    dp[i][j] = min(dp[i-1][j-1],min(dp[i-1][j],dp[i][j-1])) + 1;
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
+};
+```
+
+### 139. 单词拆分 🌟
+
+把 *s* 划分成若干段，使得每段都在 *wordDict* 中。判断能否划分。
+
+定义状态为 *dfs*(*i*)，表示能否把前缀 *s*[:*i*]（表示 *s*[0] 到 *s*[*i*−1] 这段子串）划分成若干段，使得每段都在 *wordDict* 中。
+
+**递归边界**：*dfs*(0)=true。递归到空串，说明 *s* 成功地划分完毕。
+
+**递归入口**：*dfs*(*n*)，也就是答案。
+
+整个递归过程中有大量重复递归调用（递归入参相同）。由于递归函数没有副作用，同样的入参无论计算多少次，算出来的结果都是一样的，因此可以用**记忆化搜索**来优化：
+
+- 如果一个状态（递归入参）是第一次遇到，那么可以在返回前，把状态及其结果记到一个 *memo* 数组中。
+- 如果一个状态不是第一次遇到（*memo* 中保存的结果不等于 *memo* 的初始值），那么可以直接返回 *memo* 中保存的结果。
+
+```cpp title="递归"
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        auto it = std::max_element(wordDict.begin(), wordDict.end(),
+                                   [](const string& a, const string& b) {
+                                       return a.size() < b.size();
+                                   });
+        int max_len = it->size();
+        unordered_set<string> words(wordDict.begin(), wordDict.end());
+        int n = s.size();
+        vector<int> memo(n + 1, -1);
+        auto dfs = [&](this auto&& dfs, int i) -> bool {
+            if (i == 0) {
+                return true;
+            }
+            int& res = memo[i];
+            if (res != -1) {
+                return res;
+            }
+            for (int j = i - 1; j >= max(i - max_len, 0); j--) {
+                if (words.contains(s.substr(j, i - j)) && dfs(j)) {
+                    return res = true;
+                }
+            }
+            return res = false;
+        };
+
+        return dfs(n);
+    }
+};
+```
+
+翻译成递推。
+
+具体来说，*f*[*i*] 的定义和 *dfs*(*i*) 的定义是一样的，都表示能否把前缀 *s*[:*i*]（表示 *s*[0] 到 *s*[*i*−1]）划分成若干段，使得每段都在 *wordDict* 中。
+
+同样地，枚举 *j*=*i*−1,*i*−2,*i*−3,…,max(*i*−*maxLen*,0)，只要其中一个 *j* 满足 *s*[*j*:*i*] 在 *wordDict* 中且 *f*[*j*]=true，那么 *f*[*i*] 就是 true。
+
+初始值 *f*[0]=true，翻译自递归边界 *dfs*(0)=true。
+
+答案为 *f*[*n*]，翻译自递归入口 *dfs*(*n*)。
+
+```cpp collapse="21-25"
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int max_len = ranges::max(wordDict, {}, &string::size).size();
+        unordered_set<string> words(wordDict.begin(), wordDict.end());
+
+        int n = s.size();
+        vector<int> f(n + 1);
+        f[0] = true;
+        for (int i = 1; i <= n; i++) {
+            for (int j = i - 1; j >= max(i - max_len, 0); j--) {
+                if (f[j] && words.contains(s.substr(j, i - j))) {
+                    f[i] = true;
+                    break;
+                }
+            }
+        }
+        return f[n];
+    }
+};
+
+作者：灵茶山艾府
+链接：https://leetcode.cn/problems/word-break/solutions/2968135/jiao-ni-yi-bu-bu-si-kao-dpcong-ji-yi-hua-chrs/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 ```
 
