@@ -49,3 +49,7 @@ apps/*/.astro/
 .wrangler/
 apps/*/test-results/
 apps/*/playwright-report/
+
+# 本地新建文章的脚手架（个人工作流，不入库）
+scripts/new-post.mjs
+scripts/new-post.cmd
